@@ -1,6 +1,6 @@
 var target = Argument("target", "Default");
 var local = BuildSystem.IsLocalBuild;
-var appName = "Xfx.Controls";
+var appName = "FuryTechs.FloatingActionButton";
 var versionParam = Argument<string>("BuildVersion");
 var versionParts = versionParam.Split('.');
 
