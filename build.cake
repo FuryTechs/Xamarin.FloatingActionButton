@@ -93,7 +93,7 @@ Task("Package Library")
                                     Title                   = "Xamarin Forms Floating Action Button",
                                     Authors                 = new[] {primaryAuthor},
                                     Description             = "Xamarin Forms Floating Action Button",
-                                    ProjectUrl              = new Uri("https://github.com/XamFormsExtended/Xfx.Controls"),
+                                    ProjectUrl              = new Uri("https://github.com/FuryTechs/Xamarin.FloatingActionButton"),
                                     Files                   = new [] {
                                                                         new NuSpecContent {Source = coreDir.ToString() + "/FuryTechs.FloatingActionButton.dll", Target = "lib/netcore45"},
                                                                         new NuSpecContent {Source = coreDir.ToString() + "/FuryTechs.FloatingActionButton.dll", Target = "lib/netstandard1.3"},
