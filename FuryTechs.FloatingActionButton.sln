@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.FloatingActionBut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.FloatingActionButton.iOS", "src\FuryTechs.FloatingActionButton.iOS\FuryTechs.FloatingActionButton.iOS.csproj", "{96EED8DC-5259-4CEE-9797-F706C1D6250D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.FloatingActionButton", "src\FuryTechs.FloatingActionButton\FuryTechs.FloatingActionButton.csproj", "{EC35A877-2F65-45B9-AF38-0BA6B1C46A9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuryTechs.FloatingActionButton", "src\FuryTechs.FloatingActionButton\FuryTechs.FloatingActionButton.csproj", "{EC35A877-2F65-45B9-AF38-0BA6B1C46A9D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10D16D2F-9900-42B9-9433-45D20B5FB81E}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,15 +17,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\SolutionInfo.cs = src\SolutionInfo.cs
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{B62F315D-57BB-4EA7-B91C-2E436F9D24D1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.FloatingActionButton.Example.iOS", "Example\FuryTechs.FloatingActionButton.Example.iOS\FuryTechs.FloatingActionButton.Example.iOS.csproj", "{352F7511-FF4B-433D-B80B-CD76A7730F1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.FloatingActionButton.Example.Android", "Example\FuryTechs.FloatingActionButton.Example.Android\FuryTechs.FloatingActionButton.Example.Android.csproj", "{CB51C63A-2270-4FFA-9A7B-180866E9ACF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.FloatingActionButton.Example", "Example\FuryTechs.FloatingActionButton.Example\FuryTechs.FloatingActionButton.Example.csproj", "{EB562A32-83F4-49DA-B5B6-9D88ED112A93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuryTechs.FloatingActionButton.Example", "Example\FuryTechs.FloatingActionButton.Example\FuryTechs.FloatingActionButton.Example.csproj", "{EB562A32-83F4-49DA-B5B6-9D88ED112A93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -199,6 +197,11 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{352F7511-FF4B-433D-B80B-CD76A7730F1B} = {3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5}
+		{CB51C63A-2270-4FFA-9A7B-180866E9ACF1} = {3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5}
+		{EB562A32-83F4-49DA-B5B6-9D88ED112A93} = {3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03BB33D8-3107-45A8-9DB4-C3F63F46C5BE}
 	EndGlobalSection
@@ -207,11 +210,5 @@ Global
 		$0.VersionControlPolicy = $1
 		$0.ChangeLogPolicy = $2
 		$2.UpdateMode = Directory
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5} = {10D16D2F-9900-42B9-9433-45D20B5FB81E}
-		{352F7511-FF4B-433D-B80B-CD76A7730F1B} = {3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5}
-		{CB51C63A-2270-4FFA-9A7B-180866E9ACF1} = {3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5}
-		{EB562A32-83F4-49DA-B5B6-9D88ED112A93} = {3BFD4FE2-26BF-4F92-A0EC-DDB1BC6E3DB5}
 	EndGlobalSection
 EndGlobal
