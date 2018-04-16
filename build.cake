@@ -7,7 +7,7 @@ var versionParts = versionParam.Split('.');
 var version = string.Format("{0}.{1}.{2}", versionParts[0],versionParts[1],versionParts[2]);
 var semVersion = local ? version : (version + string.Concat("-build-", versionParts[3]));
 var configuration = Argument("configuration", "Release");
-var primaryAuthor = "Chase Florell";
+var primaryAuthor = "FuryTechs";
 
 var touchDir = MakeAbsolute(Directory("./build-artifacts/output/touch"));
 var droidDir = MakeAbsolute(Directory("./build-artifacts/output/droid"));
@@ -15,13 +15,13 @@ var coreDir  = MakeAbsolute(Directory("./build-artifacts/output/core"));
 Setup(context =>
 {
     var binsToClean = GetDirectories("./src/**/bin/");
-	var artifactsToClean = new []{
+ var artifactsToClean = new []{
         touchDir.ToString(), 
         droidDir.ToString(), 
         coreDir.ToString()
-	};
-	CleanDirectories(binsToClean);
-	CleanDirectories(artifactsToClean);
+ };
+ CleanDirectories(binsToClean);
+ CleanDirectories(artifactsToClean);
 
     //Executed BEFORE the first task.
     Information("Building version {0} of {1}.", semVersion, appName);
@@ -36,8 +36,8 @@ Task("Build Droid")
 {
   MSBuild("./src/FuryTechs.FloatingActionButton.Android/FuryTechs.FloatingActionButton.Android.csproj", new MSBuildSettings
       {
-	      ToolVersion = MSBuildToolVersion.VS2017
-	  }
+       ToolVersion = MSBuildToolVersion.VS2017
+   }
       .WithProperty("OutDir", droidDir.ToString())
       .SetConfiguration(configuration));
 });
@@ -48,9 +48,9 @@ Task("Build Touch")
 {
   MSBuild("./src/FuryTechs.FloatingActionButton.iOS/FuryTechs.FloatingActionButton.iOS.csproj", new MSBuildSettings
       {
-	      ToolVersion = MSBuildToolVersion.VS2017,
-		  MSBuildPlatform = (Cake.Common.Tools.MSBuild.MSBuildPlatform)1
-	  }
+       ToolVersion = MSBuildToolVersion.VS2017,
+     MSBuildPlatform = (Cake.Common.Tools.MSBuild.MSBuildPlatform)1
+   }
       .WithProperty("OutDir", touchDir.ToString())
       .SetConfiguration(configuration));
 });
@@ -61,8 +61,8 @@ Task("Build Core")
 {
   MSBuild("./src/FuryTechs.FloatingActionButton/FuryTechs.FloatingActionButton.csproj", new MSBuildSettings
       {
-	      ToolVersion = MSBuildToolVersion.VS2017
-	  }
+       ToolVersion = MSBuildToolVersion.VS2017
+   }
       .WithProperty("OutDir", coreDir.ToString())
       .SetConfiguration(configuration));
 });
@@ -78,7 +78,7 @@ Task("Patch Assembly Info")
         Version = version,
         FileVersion = version,
         InformationalVersion = semVersion,
-        Copyright = "Copyright (c) 2015 - " + DateTime.Now.Year.ToString() + " " + primaryAuthor
+        Copyright = "Copyright (c) " + DateTime.Now.Year.ToString() + " " + primaryAuthor
     });
 });
 
@@ -96,7 +96,7 @@ Task("Package Library")
                                     ProjectUrl              = new Uri("https://github.com/FuryTechs/Xamarin.FloatingActionButton"),
                                     Files                   = new [] {
                                                                         new NuSpecContent {Source = coreDir.ToString() + "/FuryTechs.FloatingActionButton.dll", Target = "lib/netcore45"},
-                                                                        new NuSpecContent {Source = coreDir.ToString() + "/FuryTechs.FloatingActionButton.dll", Target = "lib/netstandard1.3"},
+                                                                        new NuSpecContent {Source = coreDir.ToString() + "/FuryTechs.FloatingActionButton.dll", Target = "lib/netstandard2.0"},
                                                                         new NuSpecContent {Source = coreDir.ToString() + "/FuryTechs.FloatingActionButton.dll", Target = "lib/portable-net45+win8+wpa81+wp8"},
 
                                                                         new NuSpecContent {Source = droidDir.ToString() + "/FuryTechs.FloatingActionButton.Android.dll", Target = "lib/MonoAndroid"},
