@@ -13,9 +13,4 @@
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impl\" />
-    <Folder Include="Abstraction\" />
-    <Folder Include="Impl\FontAwesome\" />
-  </ItemGroup>
 </Project>

@@ -1,14 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using FuryTechs.FloatingActionButton.Abstraction;
+using Xamarin.Forms;
 
 namespace FuryTechs.FloatingActionButton.Impl.FontAwesome
 {
+  public class FontAwesomeIcon : ActionButtonContent
+  {
+    public static readonly BindableProperty IconProperty =
+      BindableProperty.Create(nameof(Icon),
+                              typeof(FAIcons),
+                              typeof(FontAwesomeIcon),
+                              default(FAIcons));
+
+
+    /// <summary>
+    /// Gets or sets the icon (and the text as well).
+    /// </summary>
+    /// <value>The icon.</value>
+    public FAIcons Icon
+    {
+      get
+      {
+        return (FAIcons)GetValue(IconProperty);
+      }
+      set
+      {
+        SetValue(IconProperty, value);
+      }
+    }
+  }
+
+
   /// <summary>
   /// Get more icons from http://fortawesome.github.io/Font-Awesome/cheatsheet/
   /// Tip: Just copy and past the icon picture here to get the icon
   /// </summary>
-  public enum FontAwesomeIcons : int
+  public enum FAIcons : int
   {
     FAGlass = 0xf000,
     FAMusic = 0xf001,

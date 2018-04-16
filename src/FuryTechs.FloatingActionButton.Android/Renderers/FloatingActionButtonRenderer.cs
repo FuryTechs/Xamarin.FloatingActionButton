@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -10,15 +11,15 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using FuryTechs.FloatingActionButton.Abstraction;
+using FuryTechs.FloatingActionButton;
 using FuryTechs.FloatingActionButton.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(FloatingActionButton<>), typeof(FloatingActionButtonViewRenderer))]
+[assembly: ExportRenderer(typeof(ActionButton), typeof(FloatingActionButtonViewRenderer))]
 namespace FuryTechs.FloatingActionButton.Droid.Renderers
 {
-  public class FloatingActionButtonViewRenderer : ViewRenderer<FloatingActionButton<>, FrameLayout>
+  public class FloatingActionButtonViewRenderer : ViewRenderer<ActionButton, FrameLayout>
   {
 
     /// <summary>
@@ -26,7 +27,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     /// </summary>
     public async static void Init()
     {
-      var temp = DateTime.Now;
+      var temp = await Task.FromResult(DateTime.Now);
     }
 
     private const int MARGIN_DIPS = 16;
@@ -37,7 +38,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     private const int FAB_MINI_FRAME_HEIGHT_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
     private const int FAB_MINI_FRAME_WIDTH_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
     private readonly Android.Content.Context context;
-    private readonly FloatingActionButton fab;
+    private readonly Android.Support.Design.Widget.FloatingActionButton fab;
 
     /// <summary>
     /// Construtor
@@ -47,7 +48,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       float d = context.Resources.DisplayMetrics.Density;
       var margin = (int)(MARGIN_DIPS * d); // margin in pixels
 
-      fab = new FloatingActionButton(context);
+      fab = new Android.Support.Design.Widget.FloatingActionButton(context);
       var lp = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
       lp.Gravity = GravityFlags.CenterVertical | GravityFlags.CenterHorizontal;
       lp.LeftMargin = margin;
@@ -61,7 +62,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     /// Element Changed
     /// </summary>
     /// <param name="e"></param>
-    protected override void OnElementChanged(ElementChangedEventArgs<FloatingActionButton<>> e)
+    protected override void OnElementChanged(ElementChangedEventArgs<ActionButton> e)
     {
       base.OnElementChanged(e);
 
@@ -80,13 +81,12 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       Element.Show = Show;
       Element.Hide = Hide;
 
-      SetFabImage(Element.ImageName);
+      //SetFabImage(Element.ImageName);
       SetFabSize(Element.Size);
 
-      fab.ColorNormal = Element.ColorNormal.ToAndroid();
-      fab.ColorPressed = Element.ColorPressed.ToAndroid();
-      fab.ColorRipple = Element.ColorRipple.ToAndroid();
-      fab.HasShadow = Element.HasShadow;
+      fab.SetBackgroundColor(Element.ColorPressed.ToAndroid());
+      fab.RippleColor = Element.ColorRipple.ToAndroid();
+      
       fab.Click += Fab_Click;
 
       var frame = new FrameLayout(context);
@@ -100,16 +100,16 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     /// Show
     /// </summary>
     /// <param name="animate"></param>
-    public void Show(bool animate = true) =>
-        fab?.Show(animate);
+    public void Show() =>
+        fab?.Show();
 
 
     /// <summary>
     /// Hide!
     /// </summary>
     /// <param name="animate"></param>
-    public void Hide(bool animate = true) =>
-        fab?.Hide(animate);
+    public void Hide() =>
+        fab?.Hide();
 
 
     void HandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -118,30 +118,30 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       {
         Tracker.UpdateLayout();
       }
-      else if (e.PropertyName == FloatingActionButtonView.ColorNormalProperty.PropertyName)
+      else if (e.PropertyName == ActionButton.ColorNormalProperty.PropertyName)
       {
-        fab.ColorNormal = Element.ColorNormal.ToAndroid();
+        fab.SetBackgroundColor(Element.ColorNormal.ToAndroid());
       }
-      else if (e.PropertyName == FloatingActionButtonView.ColorPressedProperty.PropertyName)
+      //else if (e.PropertyName == ActionButton.ColorPressedProperty.PropertyName)
+      //{
+      //  fab.ColorPressed = Element.ColorPressed.ToAndroid();
+      //}
+      else if (e.PropertyName == ActionButton.ColorRippleProperty.PropertyName)
       {
-        fab.ColorPressed = Element.ColorPressed.ToAndroid();
+        fab.RippleColor = Element.ColorRipple.ToAndroid();
       }
-      else if (e.PropertyName == FloatingActionButtonView.ColorRippleProperty.PropertyName)
-      {
-        fab.ColorRipple = Element.ColorRipple.ToAndroid();
-      }
-      else if (e.PropertyName == FloatingActionButtonView.ImageNameProperty.PropertyName)
-      {
-        SetFabImage(Element.ImageName);
-      }
-      else if (e.PropertyName == FloatingActionButtonView.SizeProperty.PropertyName)
+      //else if (e.PropertyName == ActionButton.ImageNameProperty.PropertyName)
+      //{
+      //  SetFabImage(Element.ImageName);
+      //}
+      else if (e.PropertyName == ActionButton.SizeProperty.PropertyName)
       {
         SetFabSize(Element.Size);
       }
-      else if (e.PropertyName == FloatingActionButtonView.HasShadowProperty.PropertyName)
-      {
-        fab.HasShadow = Element.HasShadow;
-      }
+      //else if (e.PropertyName == ActionButton.HasShadowProperty.PropertyName)
+      //{
+      //  fab.HasShadow = Element.HasShadow;
+      //}
     }
 
     void SetFabImage(string imageName)
@@ -162,20 +162,20 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       }
     }
 
-    void SetFabSize(FloatingActionButtonSize size)
+    void SetFabSize(int size)
     {
-      if (size == FloatingActionButtonSize.Mini)
-      {
-        fab.Size = FabSize.Mini;
-        Element.WidthRequest = FAB_MINI_FRAME_WIDTH_WITH_PADDING;
-        Element.HeightRequest = FAB_MINI_FRAME_HEIGHT_WITH_PADDING;
-      }
-      else
-      {
-        fab.Size = FabSize.Normal;
+      //if (size == FloatingActionButtonSize.Mini)
+      //{
+        fab.Size = size;
+        //Element.WidthRequest = FAB_MINI_FRAME_WIDTH_WITH_PADDING;
+        //Element.HeightRequest = FAB_MINI_FRAME_HEIGHT_WITH_PADDING;
+      //}
+      //else
+      //{
+      //  fab.Size = size;
         Element.WidthRequest = FAB_FRAME_WIDTH_WITH_PADDING;
         Element.HeightRequest = FAB_FRAME_HEIGHT_WITH_PADDING;
-      }
+      //}
     }
 
     void Fab_Click(object sender, EventArgs e)
