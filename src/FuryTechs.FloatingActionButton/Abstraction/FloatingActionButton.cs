@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace FuryTechs.FloatingActionButton
+namespace FuryTechs.FloatingActionButton.Abstraction
 {
   public abstract class FloatingActionButton<TEnum> : View
   {

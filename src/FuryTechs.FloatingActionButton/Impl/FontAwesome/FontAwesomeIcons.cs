@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FuryTechs.FloatingActionButton.Icons
+namespace FuryTechs.FloatingActionButton.Impl.FontAwesome
 {
   /// <summary>
   /// Get more icons from http://fortawesome.github.io/Font-Awesome/cheatsheet/
