@@ -47,12 +47,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="25.4.0.2" />
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="25.4.0.2" />
-    <PackageReference Include="Xamarin.Android.Support.v4" Version="25.4.0.2" />
-    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="25.4.0.2" />
-    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="25.4.0.2" />
+    <PackageReference Include="Xamarin.Forms">
+      <Version>2.5.1.444934</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Design">
+      <Version>27.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
+      <Version>27.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v4">
+      <Version>27.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView">
+      <Version>27.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter">
+      <Version>27.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -82,8 +94,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FuryTechs.FloatingActionButton.Example\FuryTechs.FloatingActionButton.Example.csproj">
-      <Project>{3DC16788-3F2D-4B29-B933-362504246C60}</Project>
+      <Project>{EB562A32-83F4-49DA-B5B6-9D88ED112A93}</Project>
       <Name>FuryTechs.FloatingActionButton.Example</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\FuryTechs.FloatingActionButton.Android\FuryTechs.FloatingActionButton.Android.csproj">
+      <IsAppExtension>true</IsAppExtension>
+      <Project>{404ED6AB-C6B0-4D3C-B179-232B2F71E2DF}</Project>
+      <Name>FuryTechs.FloatingActionButton.Android</Name>
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
 

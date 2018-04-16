@@ -124,8 +124,12 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\FuryTechs.FloatingActionButton.Example\FuryTechs.FloatingActionButton.Example.csproj">
-      <Project>{3DC16788-3F2D-4B29-B933-362504246C60}</Project>
+      <Project>{EB562A32-83F4-49DA-B5B6-9D88ED112A93}</Project>
       <Name>FuryTechs.FloatingActionButton.Example</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\FuryTechs.FloatingActionButton.iOS\FuryTechs.FloatingActionButton.iOS.csproj">
+      <Project>{96EED8DC-5259-4CEE-9797-F706C1D6250D}</Project>
+      <Name>FuryTechs.FloatingActionButton.iOS</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
