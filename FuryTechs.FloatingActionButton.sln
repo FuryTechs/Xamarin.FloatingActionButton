@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.FloatingActionBut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuryTechs.FloatingActionButton", "src\FuryTechs.FloatingActionButton\FuryTechs.FloatingActionButton.csproj", "{EC35A877-2F65-45B9-AF38-0BA6B1C46A9D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{B62F315D-57BB-4EA7-B91C-2E436F9D24D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
