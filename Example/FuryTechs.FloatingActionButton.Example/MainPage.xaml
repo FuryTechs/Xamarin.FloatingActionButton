@@ -2,11 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:local="clr-namespace:FuryTechs.FloatingActionButton.Example"
-              xmlns:fab="clr-namespace:FuryTechs.FloatingActionButton.Impl.FontAwesome;assembly=FuryTechs.FloatingActionButton"
+              xmlns:fab="clr-namespace:FuryTechs.FloatingActionButton;assembly=FuryTechs.FloatingActionButton"
+              xmlns:fabContent="clr-namespace:FuryTechs.FloatingActionButton.ContentTypes;assembly=FuryTechs.FloatingActionButton"
               x:Class="FuryTechs.FloatingActionButton.Example.MainPage">
-  <StackLayout>
-    <Label Text="Welcome to Xamarin.Forms!" VerticalOptions="Center"
+    <StackLayout>
+        <Label Text="Welcome to Xamarin.Forms!" VerticalOptions="Center"
             HorizontalOptions="Center" />
-    <fab:FontAwesomeFloatingActionButton Icon="FACheck" Size="64" />
-  </StackLayout>
+        <fab:ActionButton>
+            <fabContent:FontAwesomeIcon Icon="FACheck" />
+        </fab:ActionButton>
+    </StackLayout>
 </ContentPage>

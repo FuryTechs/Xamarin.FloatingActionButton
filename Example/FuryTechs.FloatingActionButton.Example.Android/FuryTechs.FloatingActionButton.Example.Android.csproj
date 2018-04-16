@@ -28,6 +28,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,15 +96,13 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\FuryTechs.FloatingActionButton.Android\FuryTechs.FloatingActionButton.Android.csproj">
+      <Project>{404ed6ab-c6b0-4d3c-b179-232b2f71e2df}</Project>
+      <Name>FuryTechs.FloatingActionButton.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FuryTechs.FloatingActionButton.Example\FuryTechs.FloatingActionButton.Example.csproj">
       <Project>{EB562A32-83F4-49DA-B5B6-9D88ED112A93}</Project>
       <Name>FuryTechs.FloatingActionButton.Example</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\FuryTechs.FloatingActionButton.Android\FuryTechs.FloatingActionButton.Android.csproj">
-      <IsAppExtension>true</IsAppExtension>
-      <Project>{404ED6AB-C6B0-4D3C-B179-232B2F71E2DF}</Project>
-      <Name>FuryTechs.FloatingActionButton.Android</Name>
-      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

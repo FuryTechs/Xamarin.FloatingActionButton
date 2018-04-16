@@ -2,7 +2,7 @@
 using FuryTechs.FloatingActionButton.Abstraction;
 using Xamarin.Forms;
 
-namespace FuryTechs.FloatingActionButton.Impl.FontAwesome
+namespace FuryTechs.FloatingActionButton.ContentTypes
 {
   public class FontAwesomeIcon : ActionButtonContent
   {

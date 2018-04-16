@@ -37,7 +37,6 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     private const int FAB_FRAME_WIDTH_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_NORMAL;
     private const int FAB_MINI_FRAME_HEIGHT_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
     private const int FAB_MINI_FRAME_WIDTH_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
-    private readonly Android.Content.Context context;
     private readonly Android.Support.Design.Widget.FloatingActionButton fab;
 
     /// <summary>
@@ -45,10 +44,10 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     /// </summary>
     public FloatingActionButtonViewRenderer(Context ctx) : base(ctx)
     {
-      float d = context.Resources.DisplayMetrics.Density;
+      float d = Context.Resources.DisplayMetrics.Density;
       var margin = (int)(MARGIN_DIPS * d); // margin in pixels
 
-      fab = new Android.Support.Design.Widget.FloatingActionButton(context);
+      fab = new Android.Support.Design.Widget.FloatingActionButton(Context);
       var lp = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
       lp.Gravity = GravityFlags.CenterVertical | GravityFlags.CenterHorizontal;
       lp.LeftMargin = margin;
@@ -89,7 +88,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       
       fab.Click += Fab_Click;
 
-      var frame = new FrameLayout(context);
+      var frame = new FrameLayout(Context);
       frame.RemoveAllViews();
       frame.AddView(fab);
 
@@ -151,9 +150,9 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         try
         {
           var drawableNameWithoutExtension = Path.GetFileNameWithoutExtension(imageName).ToLower();
-          var resources = context.Resources;
-          var imageResourceName = resources.GetIdentifier(drawableNameWithoutExtension, "drawable", context.PackageName);
-          fab.SetImageBitmap(Android.Graphics.BitmapFactory.DecodeResource(context.Resources, imageResourceName));
+          var resources = Context.Resources;
+          var imageResourceName = resources.GetIdentifier(drawableNameWithoutExtension, "drawable", Context.PackageName);
+          fab.SetImageBitmap(Android.Graphics.BitmapFactory.DecodeResource(Context.Resources, imageResourceName));
         }
         catch (Exception ex)
         {
