@@ -8,8 +8,9 @@
     <StackLayout>
         <Label Text="Welcome to Xamarin.Forms!" VerticalOptions="Center"
             HorizontalOptions="Center" />
-        <fab:ActionButton>
-            <fabContent:FontAwesomeIcon Icon="FACheck" />
+        <fab:ActionButton BackgroundColor="Red">
         </fab:ActionButton>
+
+
     </StackLayout>
 </ContentPage>
