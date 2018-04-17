@@ -5,6 +5,7 @@ using Xamarin.Forms;
 
 namespace FuryTechs.FloatingActionButton
 {
+  [ContentProperty("Content")]
   public class ActionButton : View
   {
     /// <summary>
@@ -14,7 +15,7 @@ namespace FuryTechs.FloatingActionButton
         BindableProperty.Create(nameof(ColorNormal),
             typeof(Color),
             typeof(ActionButton),
-            Color.White);
+            Color.Black);
 
     /// <summary>
     /// Gets or sets the color of the button
@@ -159,22 +160,20 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public static readonly BindableProperty SizeProperty =
                            BindableProperty.Create(nameof(Size),
-                                                   typeof(int),
+                                                   typeof(Size),
                                                    typeof(ActionButton),
-                                                   default(int));
+                                                   default(Size));
 
     /// <summary>
     /// Gets or sets the size of the button
     /// </summary>
     /// <value>The size of the button.</value>
-    public int Size
+    public Size Size
     {
-      get { return (int)GetValue(SizeProperty); }
+      get { return (Size)GetValue(SizeProperty); }
       set
       {
         SetValue(SizeProperty, value);
-        SetValue(WidthRequestProperty, value);
-        SetValue(HeightRequestProperty, value);
       }
     }
 
@@ -194,6 +193,7 @@ namespace FuryTechs.FloatingActionButton
         IsEnabled = true;
     }
 
+
     /// <summary>
     /// Gets or sets the content of the Floating Action Button
     /// </summary>
@@ -201,12 +201,28 @@ namespace FuryTechs.FloatingActionButton
                            BindableProperty.Create(nameof(Content),
                                                    typeof(ActionButtonContent),
                                                    typeof(ActionButton),
-                                                   null);
+                                                   null, propertyChanged: HandleBindingPropertyChangedDelegate);
+
     /// <summary>
     /// Gets or sets the content of the Floating Action Button
     /// </summary>
     /// <value>The content of the button</value>
     public ActionButtonContent Content { get; set; }
+
+    static void HandleBindingPropertyChangedDelegate(BindableObject bindable, object oldValue, object newValue)
+    {
+      if(bindable is ActionButton ab && newValue is ActionButtonContent content) {
+        ab.Content = content;
+      }
+    }
+
+
   }
 
+  public enum Size
+  {
+    Mini,
+    Normal,
+    Auto
+  }
 }

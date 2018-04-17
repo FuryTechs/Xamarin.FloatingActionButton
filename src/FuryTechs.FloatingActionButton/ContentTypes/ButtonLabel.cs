@@ -8,7 +8,10 @@ namespace FuryTechs.FloatingActionButton.ContentTypes
 {
   public class ButtonLabel : ActionButtonContent
   {
-    public static readonly BindableProperty IconProperty =
+    /// <summary>
+    /// The text property.
+    /// </summary>
+    public static readonly BindableProperty TextProperty =
                            BindableProperty.Create(nameof(Text),
                                                    typeof(string),
                                                    typeof(ButtonLabel),
@@ -23,12 +26,65 @@ namespace FuryTechs.FloatingActionButton.ContentTypes
     {
       get
       {
-        return (string)GetValue(IconProperty);
+        return (string)GetValue(TextProperty);
       }
       set
       {
-        SetValue(IconProperty, value);
+        SetValue(TextProperty, value);
       }
     }
+
+    /// <summary>
+    /// The font property.
+    /// </summary>
+    public static readonly BindableProperty FontProperty =
+                           BindableProperty.Create(nameof(ButtonLabel.Font),
+                                                   typeof(Font),
+                                                   typeof(ButtonLabel),
+                                                   default(Font));
+
+
+    /// <summary>
+    /// Gets or sets the icon (and the text as well).
+    /// </summary>
+    /// <value>The icon.</value>
+    public Font Font
+    {
+      get
+      {
+        return (Font)GetValue(FontProperty);
+      }
+      set
+      {
+        SetValue(FontProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// The font size property.
+    /// </summary>
+    public static readonly BindableProperty FontSizeProperty =
+                           BindableProperty.Create(nameof(ButtonLabel.FontSize),
+                                                   typeof(int),
+                                                   typeof(ButtonLabel),
+                                                   default(int));
+
+
+    /// <summary>
+    /// Gets or sets the icon (and the text as well).
+    /// </summary>
+    /// <value>The icon.</value>
+    public int FontSize
+    {
+      get
+      {
+        return (int)GetValue(FontSizeProperty);
+      }
+      set
+      {
+        SetValue(FontSizeProperty, value);
+      }
+    }
+
   }
 }

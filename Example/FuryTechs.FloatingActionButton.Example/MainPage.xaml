@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:local="clr-namespace:FuryTechs.FloatingActionButton.Example"
               xmlns:fab="clr-namespace:FuryTechs.FloatingActionButton;assembly=FuryTechs.FloatingActionButton"
               xmlns:fabContent="clr-namespace:FuryTechs.FloatingActionButton.ContentTypes;assembly=FuryTechs.FloatingActionButton"
               x:Class="FuryTechs.FloatingActionButton.Example.MainPage">
+  <ContentPage.Content>
     <StackLayout>
-        <Label Text="Welcome to Xamarin.Forms!" VerticalOptions="Center"
-            HorizontalOptions="Center" />
-        <fab:ActionButton BackgroundColor="Red">
-        </fab:ActionButton>
-
-
+      <fab:ActionButton ColorNormal="Blue" Size="Mini" />
+      <fab:ActionButton ColorNormal="Green" Size="Normal">
+        <fabContent:ButtonLabel Color="Blue" Text="X" FontSize="30"/>
+      </fab:ActionButton>
     </StackLayout>
+  </ContentPage.Content>
 </ContentPage>
