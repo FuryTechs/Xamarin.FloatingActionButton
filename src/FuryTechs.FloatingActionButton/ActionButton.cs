@@ -153,8 +153,6 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public ShowHideDelegate Hide { get; set; }
 
-
-
     /// <summary>
     /// Gets or sets the size of the button
     /// </summary>

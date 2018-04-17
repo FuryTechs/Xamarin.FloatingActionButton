@@ -4,12 +4,12 @@
               xmlns:fab="clr-namespace:FuryTechs.FloatingActionButton;assembly=FuryTechs.FloatingActionButton"
               xmlns:fabContent="clr-namespace:FuryTechs.FloatingActionButton.ContentTypes;assembly=FuryTechs.FloatingActionButton"
               x:Class="FuryTechs.FloatingActionButton.Example.MainPage">
-  <ContentPage.Content>
-    <StackLayout>
-      <fab:ActionButton ColorNormal="Blue" Size="Mini" />
-      <fab:ActionButton ColorNormal="Green" Size="Normal">
-        <fabContent:ButtonLabel Color="Blue" Text="X" FontSize="30"/>
-      </fab:ActionButton>
-    </StackLayout>
-  </ContentPage.Content>
+    <ContentPage.Content>
+        <StackLayout>
+            <fab:ActionButton ColorNormal="Blue" Size="Mini" />
+            <fab:ActionButton x:Name="fab" ColorNormal="Green" Size="Normal">
+                <fabContent:ButtonLabel Color="Blue" Text="X" Font="30"/>
+            </fab:ActionButton>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

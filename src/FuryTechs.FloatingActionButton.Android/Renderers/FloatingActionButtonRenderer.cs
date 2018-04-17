@@ -85,6 +85,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       fab.BackgroundTintList = ColorStateList.ValueOf(Element.ColorNormal.ToAndroid());
       fab.RippleColor = Element.ColorRipple.ToAndroid();
       fab.Click += Fab_Click;
+      
 
       var frameLayout = new FrameLayout(Context);
 
@@ -98,7 +99,8 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         content.Layout(fab.Left, fab.Top, fab.Right, fab.Bottom);
         content.SetX(fab.GetX());
         content.SetY(fab.GetY());
-        content.SetZ(fab.GetZ() + 1000);
+        content.SetZ(fab.GetZ() + 500);
+        //fab.SetImageDrawable(content.RootView);
         frameLayout.AddView(content);
       }
       SetNativeControl(frameLayout);
