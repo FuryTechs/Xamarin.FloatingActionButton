@@ -14,6 +14,7 @@ using Android.Views;
 using Android.Widget;
 using FuryTechs.FloatingActionButton;
 using FuryTechs.FloatingActionButton.Droid.Renderers;
+using FuryTechs.FloatingActionButton.Droid.Renderers.ContentTypes;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -45,8 +46,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     public FloatingActionButtonViewRenderer(Context ctx) : base(ctx)
     {
       float d = Context.Resources.DisplayMetrics.Density;
-      var margin = (int)(MARGIN_DIPS * d); // margin in pixels
-
+      var margin = 0;//(int)(MARGIN_DIPS * d); // margin in pixels
       fab = new Android.Support.Design.Widget.FloatingActionButton(Context);
       var lp = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
       lp.Gravity = GravityFlags.CenterVertical | GravityFlags.CenterHorizontal;
@@ -82,26 +82,31 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       Element.Hide = Hide;
 
       SetFabSize(Element.Size);
+
       fab.BackgroundTintList = ColorStateList.ValueOf(Element.ColorNormal.ToAndroid());
       fab.RippleColor = Element.ColorRipple.ToAndroid();
+      fab.Elevation = 10;
       fab.Click += Fab_Click;
 
       var frameLayout = new FrameLayout(Context);
 
       frameLayout.RemoveAllViews();
       frameLayout.AddView(fab);
+      frameLayout.Layout(0, 0, LayoutParams.WrapContent, LayoutParams.WrapContent);
 
       if (Element.Content != null)
       {
         var content = Platform.CreateRendererWithContext(Element.Content, Context).View;
-        content.LayoutParameters = fab.LayoutParameters;
-        content.Layout(fab.Left, fab.Top, fab.Right, fab.Bottom);
-        content.SetX(fab.GetX());
-        content.SetY(fab.GetY());
-        content.SetZ(fab.GetZ() + 1000);
-        frameLayout.AddView(content);
+        if (content is IConvertable bitmapContent)
+        {
+          bitmapContent.SetSize(Element.Size);
+          var bmp = bitmapContent.ToBitmap((int)Element.Width);
+          var drawable = new Android.Graphics.Drawables.BitmapDrawable(Resources, bmp);
+          fab.SetImageDrawable(drawable);
+        }
       }
       SetNativeControl(frameLayout);
+      Layout(0, 0, LayoutParams.WrapContent, LayoutParams.WrapContent);
     }
 
     /// <summary>
@@ -150,34 +155,15 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       //}
     }
 
-    void SetFabImage(string imageName)
+    void SetFabSize(Abstraction.Size size)
     {
-      if (!string.IsNullOrWhiteSpace(imageName))
-      {
-        try
-        {
-          var drawableNameWithoutExtension = Path.GetFileNameWithoutExtension(imageName).ToLower();
-          var resources = Context.Resources;
-          var imageResourceName = resources.GetIdentifier(drawableNameWithoutExtension, "drawable", Context.PackageName);
-
-          fab.SetImageBitmap(Android.Graphics.BitmapFactory.DecodeResource(Context.Resources, imageResourceName));
-        }
-        catch (Exception ex)
-        {
-          throw new FileNotFoundException("There was no Android Drawable by that name.", ex);
-        }
-      }
-    }
-
-    void SetFabSize(Size size)
-    {
-      if (size == Size.Mini)
+      if (size == Abstraction.Size.Mini)
       {
         fab.Size = Android.Support.Design.Widget.FloatingActionButton.SizeMini;
         Element.WidthRequest = FAB_MINI_FRAME_WIDTH_WITH_PADDING;
         Element.HeightRequest = FAB_MINI_FRAME_HEIGHT_WITH_PADDING;
       }
-      else if (size == Size.Normal)
+      else if (size == Abstraction.Size.Normal)
       {
         fab.Size = Android.Support.Design.Widget.FloatingActionButton.SizeNormal;
         Element.WidthRequest = FAB_FRAME_WIDTH_WITH_PADDING;
@@ -189,6 +175,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         //Element.WidthRequest = 0;
         //Element.HeightRequest = 0;
       }
+      Element.Layout(new Rectangle(0, 0, Element.WidthRequest, Element.HeightRequest));
     }
 
     void Fab_Click(object sender, EventArgs e)

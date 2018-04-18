@@ -6,6 +6,9 @@ namespace FuryTechs.FloatingActionButton.ContentTypes
 {
   public class FontAwesomeIcon : ActionButtonContent
   {
+    /// <summary>
+    /// The icon property.
+    /// </summary>
     public static readonly BindableProperty IconProperty =
       BindableProperty.Create(nameof(Icon),
                               typeof(FAIcons),
@@ -27,6 +30,28 @@ namespace FuryTechs.FloatingActionButton.ContentTypes
       {
         SetValue(IconProperty, value);
       }
+    }
+
+    private Abstraction.Size size;
+    /// <summary>
+    /// Gets or sets the icon (and the text as well).
+    /// </summary>
+    /// <value>The icon.</value>
+    public Abstraction.Size Size
+    {
+      get
+      {
+        return size;
+      }
+    }
+
+    /// <summary>
+    /// Sets the size.
+    /// </summary>
+    /// <param name="size">Size.</param>
+    public void SetSize(Abstraction.Size size)
+    {
+      this.size = size;
     }
   }
 

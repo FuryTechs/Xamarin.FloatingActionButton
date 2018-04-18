@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
 using FuryTechs.FloatingActionButton.ContentTypes;
@@ -33,7 +34,6 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers.ContentTypes
         TextAlignment = TextAlignment.Center,
         ForegroundTintList = ColorStateList.ValueOf(Element.Color.ToAndroid()),
       });
-
     }
   }
 }

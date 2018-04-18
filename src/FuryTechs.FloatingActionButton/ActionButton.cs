@@ -153,24 +153,22 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public ShowHideDelegate Hide { get; set; }
 
-
-
     /// <summary>
     /// Gets or sets the size of the button
     /// </summary>
     public static readonly BindableProperty SizeProperty =
                            BindableProperty.Create(nameof(Size),
-                                                   typeof(Size),
+                                                   typeof(Abstraction.Size),
                                                    typeof(ActionButton),
-                                                   default(Size));
+                                                   default(Abstraction.Size));
 
     /// <summary>
     /// Gets or sets the size of the button
     /// </summary>
     /// <value>The size of the button.</value>
-    public Size Size
+    public Abstraction.Size Size
     {
-      get { return (Size)GetValue(SizeProperty); }
+      get { return (Abstraction.Size)GetValue(SizeProperty); }
       set
       {
         SetValue(SizeProperty, value);
@@ -209,20 +207,20 @@ namespace FuryTechs.FloatingActionButton
     /// <value>The content of the button</value>
     public ActionButtonContent Content { get; set; }
 
-    static void HandleBindingPropertyChangedDelegate(BindableObject bindable, object oldValue, object newValue)
+    /// <summary>
+    /// Handles the binding property changed delegate.
+    /// </summary>
+    /// <param name="bindable">Bindable.</param>
+    /// <param name="oldValue">Old value.</param>
+    /// <param name="newValue">New value.</param>
+    static void HandleBindingPropertyChangedDelegate(BindableObject bindable, 
+                                                     object oldValue, 
+                                                     object newValue)
     {
-      if(bindable is ActionButton ab && newValue is ActionButtonContent content) {
+      if (bindable is ActionButton ab && newValue is ActionButtonContent content)
+      {
         ab.Content = content;
       }
     }
-
-
-  }
-
-  public enum Size
-  {
-    Mini,
-    Normal,
-    Auto
   }
 }

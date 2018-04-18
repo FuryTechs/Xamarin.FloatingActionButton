@@ -59,32 +59,5 @@ namespace FuryTechs.FloatingActionButton.ContentTypes
         SetValue(FontProperty, value);
       }
     }
-
-    /// <summary>
-    /// The font size property.
-    /// </summary>
-    public static readonly BindableProperty FontSizeProperty =
-                           BindableProperty.Create(nameof(ButtonLabel.FontSize),
-                                                   typeof(int),
-                                                   typeof(ButtonLabel),
-                                                   default(int));
-
-
-    /// <summary>
-    /// Gets or sets the icon (and the text as well).
-    /// </summary>
-    /// <value>The icon.</value>
-    public int FontSize
-    {
-      get
-      {
-        return (int)GetValue(FontSizeProperty);
-      }
-      set
-      {
-        SetValue(FontSizeProperty, value);
-      }
-    }
-
   }
 }

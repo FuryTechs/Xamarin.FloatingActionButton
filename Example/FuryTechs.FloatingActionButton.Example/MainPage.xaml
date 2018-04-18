@@ -6,10 +6,23 @@
               x:Class="FuryTechs.FloatingActionButton.Example.MainPage">
   <ContentPage.Content>
     <StackLayout>
-      <fab:ActionButton ColorNormal="Blue" Size="Mini" />
-      <fab:ActionButton ColorNormal="Green" Size="Normal">
-        <fabContent:ButtonLabel Color="Blue" Text="X" FontSize="30"/>
+      <fab:ActionButton x:Name="Fab" ColorNormal="Green" Size="Normal">
+        <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
       </fab:ActionButton>
+      
+      <fab:ActionButton ColorNormal="Green" Size="Mini">
+        <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+      </fab:ActionButton>
+      
+      <fab:ActionMenu>
+        <fab:ActionMenu.ToggleButton>
+          <fab:ActionButton ColorNormal="Red" Size="Normal">
+            <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          </fab:ActionButton>
+        </fab:ActionMenu.ToggleButton>
+        <fab:ActionMenu.Contents>
+        </fab:ActionMenu.Contents>
+      </fab:ActionMenu>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>
