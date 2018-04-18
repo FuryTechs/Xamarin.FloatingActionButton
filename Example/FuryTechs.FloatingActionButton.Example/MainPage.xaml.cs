@@ -7,17 +7,6 @@ namespace FuryTechs.FloatingActionButton.Example
 {
   public partial class MainPage : ContentPage
   {
-    public void OnClick(object sender, EventArgs eventArgs)
-    {
-      if (fab.Rotation == 0)
-      {
-        fab.RotateTo(315, 500, Easing.CubicInOut);
-      }
-      else
-      {
-        fab.RotateTo(0, 500, Easing.CubicInOut);
-      }
-    }
 
     public MainPage()
     {
@@ -36,18 +25,5 @@ namespace FuryTechs.FloatingActionButton.Example
         Fab.RotateTo(0, 500, Easing.SpringOut);
       }
     }
-
-    void FabMini_Clicked(object arg1, EventArgs arg2)
-    {
-      //if (FabMini.Rotation == 0)
-      //{
-      //  FabMini.RotateTo(315, 500, Easing.CubicInOut);
-      //}
-      //else
-      //{
-      //  FabMini.RotateTo(0, 500, Easing.CubicInOut);
-      //}
-    }
-
   }
 }

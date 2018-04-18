@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using Android.Content;
 using Android.Widget;
 using FuryTechs.FloatingActionButton;
@@ -15,7 +18,6 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     }
 
     int atMost = MeasureSpec.MakeMeasureSpec(LayoutParams.WrapContent, Android.Views.MeasureSpecMode.AtMost);
-    int exactly = MeasureSpec.MakeMeasureSpec(LayoutParams.WrapContent, Android.Views.MeasureSpecMode.AtMost);
 
     protected override void OnElementChanged(ElementChangedEventArgs<ActionMenu> e)
     {
@@ -30,7 +32,6 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
 
       if (this.Element != null)
       {
-        //UpdateContent ();
         this.Element.PropertyChanged += HandlePropertyChanged;
       }
 
@@ -38,17 +39,28 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       layout.RemoveAllViews();
       if (Element.ToggleButton != null)
       {
-        var toggleButtonRenderer = Platform.CreateRendererWithContext(Element.ToggleButton, Context);
-        toggleButtonRenderer.View.Measure(atMost, atMost);
-        var layoutParams = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
-        layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
-        toggleButtonRenderer.View.LayoutParameters = layoutParams;
-        layout.AddView(toggleButtonRenderer.View);
-      }
+        var toggleButtonRenderer = Platform.CreateRendererWithContext(Element.ToggleButton, Context).View;
 
+        var layoutParams = new FrameLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
+        layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
+        toggleButtonRenderer.LayoutParameters = layoutParams;
+        layout.AddView(toggleButtonRenderer);
+      }
+      if (Element.Contents?.Count() > 0)
+      {
+        foreach (var internalButton in Element.Contents)
+        {
+          var toggleButtonRenderer = Platform.CreateRendererWithContext(internalButton, Context).View;
+          var layoutParams = new FrameLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
+          layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
+          toggleButtonRenderer.LayoutParameters = layoutParams;
+          layout.AddView(toggleButtonRenderer);
+        }
+      }
       layout.Measure(atMost, atMost);
       SetNativeControl(layout);
       Measure(atMost, atMost);
+      Layout(0, 0, MeasuredWidth, MeasuredHeight);
     }
 
     void HandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

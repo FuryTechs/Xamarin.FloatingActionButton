@@ -175,10 +175,25 @@ namespace FuryTechs.FloatingActionButton
       }
     }
 
+    public static readonly BindableProperty ClickedProperty =
+                           BindableProperty.Create(nameof(Clicked),
+                                                   typeof(Action<object, EventArgs>),
+                                                   typeof(ActionButton));
+
     /// <summary>
     /// Action to call when clicked
     /// </summary>
-    public Action<object, EventArgs> Clicked { get; set; }
+    public Action<object, EventArgs> Clicked
+    {
+      get
+      {
+        return (Action<object, EventArgs>)GetValue(ClickedProperty);
+      }
+      set
+      {
+        SetValue(ClickedProperty, value);
+      }
+    }
 
     void OnCommandChanged()
     {
@@ -213,8 +228,8 @@ namespace FuryTechs.FloatingActionButton
     /// <param name="bindable">Bindable.</param>
     /// <param name="oldValue">Old value.</param>
     /// <param name="newValue">New value.</param>
-    static void HandleBindingPropertyChangedDelegate(BindableObject bindable, 
-                                                     object oldValue, 
+    static void HandleBindingPropertyChangedDelegate(BindableObject bindable,
+                                                     object oldValue,
                                                      object newValue)
     {
       if (bindable is ActionButton ab && newValue is ActionButtonContent content)

@@ -4,25 +4,24 @@
               xmlns:fab="clr-namespace:FuryTechs.FloatingActionButton;assembly=FuryTechs.FloatingActionButton"
               xmlns:fabContent="clr-namespace:FuryTechs.FloatingActionButton.ContentTypes;assembly=FuryTechs.FloatingActionButton"
               x:Class="FuryTechs.FloatingActionButton.Example.MainPage">
-  <ContentPage.Content>
-    <StackLayout>
-      <fab:ActionButton x:Name="Fab" ColorNormal="Green" Size="Normal">
-        <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
-      </fab:ActionButton>
-      
-      <fab:ActionButton ColorNormal="Green" Size="Mini">
-        <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
-      </fab:ActionButton>
-      
-      <fab:ActionMenu>
-        <fab:ActionMenu.ToggleButton>
-          <fab:ActionButton ColorNormal="Red" Size="Normal">
-            <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
-          </fab:ActionButton>
-        </fab:ActionMenu.ToggleButton>
-        <fab:ActionMenu.Contents>
-        </fab:ActionMenu.Contents>
-      </fab:ActionMenu>
-    </StackLayout>
-  </ContentPage.Content>
+    <ContentPage.Content>
+        <StackLayout>
+            <fab:ActionMenu>
+                <fab:ActionMenu.ToggleButton>
+                    <fab:ActionButton ColorNormal="Red" Size="Normal">
+                        <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+                    </fab:ActionButton>
+                </fab:ActionMenu.ToggleButton>
+                <fab:ActionMenu.Contents>
+                    <fab:ActionButton x:Name="Fab" ColorNormal="Blue" Size="Normal" Clicked="Fab_Clicked">
+                        <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+                    </fab:ActionButton>
+
+                    <fab:ActionButton ColorNormal="Green" Size="Mini">
+                        <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+                    </fab:ActionButton>
+                </fab:ActionMenu.Contents>
+            </fab:ActionMenu>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

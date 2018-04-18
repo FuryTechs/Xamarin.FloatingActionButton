@@ -10,11 +10,18 @@ namespace FuryTechs.FloatingActionButton
   {
     public static readonly ActionButton DEFAULT_TOGGLE_BUTTON = new ActionButton()
     {
+      HorizontalOptions = LayoutOptions.Center,
+      VerticalOptions = LayoutOptions.Center,
       Content = new FontAwesomeIcon()
       {
         Icon = FAIcons.FAPlus
       }
     };
+
+    public ActionMenu()
+    {
+      Contents = new List<ActionButton>();
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether this <see cref="T:FuryTechs.FloatingActionButton.ActionMenu"/> is open.

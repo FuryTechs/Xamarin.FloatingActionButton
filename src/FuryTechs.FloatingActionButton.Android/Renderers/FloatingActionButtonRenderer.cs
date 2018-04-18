@@ -39,6 +39,8 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     private const int FAB_FRAME_WIDTH_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_NORMAL;
     private const int FAB_MINI_FRAME_HEIGHT_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
     private const int FAB_MINI_FRAME_WIDTH_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
+
+    private readonly int AT_MOST = MeasureSpec.MakeMeasureSpec(LayoutParams.WrapContent, MeasureSpecMode.AtMost);
     private readonly Android.Support.Design.Widget.FloatingActionButton fab;
     /// <summary>
     /// Construtor
@@ -48,7 +50,8 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       float d = Context.Resources.DisplayMetrics.Density;
       var margin = 0;//(int)(MARGIN_DIPS * d); // margin in pixels
       fab = new Android.Support.Design.Widget.FloatingActionButton(Context);
-      var lp = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
+      fab.Measure(AT_MOST, AT_MOST);
+      var lp = new FrameLayout.LayoutParams(fab.MeasuredWidth - margin * 2, fab.MeasuredHeight - margin * 2);
       lp.Gravity = GravityFlags.CenterVertical | GravityFlags.CenterHorizontal;
 
       lp.LeftMargin = margin;
@@ -87,13 +90,13 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       fab.RippleColor = Element.ColorRipple.ToAndroid();
       fab.Elevation = 10;
       fab.Click += Fab_Click;
-      
+
 
       var frameLayout = new FrameLayout(Context);
 
       frameLayout.RemoveAllViews();
       frameLayout.AddView(fab);
-      frameLayout.Layout(0, 0, LayoutParams.WrapContent, LayoutParams.WrapContent);
+      frameLayout.Layout(0, 0, fab.Width, fab.Height);
 
       if (Element.Content != null)
       {
@@ -107,7 +110,8 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         }
       }
       SetNativeControl(frameLayout);
-      Layout(0, 0, LayoutParams.WrapContent, LayoutParams.WrapContent);
+      Layout(0, 0, fab.MeasuredWidth, fab.MeasuredHeight);
+      
     }
 
     /// <summary>
