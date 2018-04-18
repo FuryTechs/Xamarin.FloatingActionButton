@@ -87,6 +87,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       fab.RippleColor = Element.ColorRipple.ToAndroid();
       fab.Elevation = 10;
       fab.Click += Fab_Click;
+      
 
       var frameLayout = new FrameLayout(Context);
 
