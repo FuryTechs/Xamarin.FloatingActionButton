@@ -11,13 +11,13 @@ using Xamarin.Forms.Platform.Android;
 [assembly: Xamarin.Forms.ExportRenderer(typeof(ActionMenu), typeof(ActionMenuRenderer))]
 namespace FuryTechs.FloatingActionButton.Droid.Renderers
 {
-  public class ActionMenuRenderer : ViewRenderer<ActionMenu, FrameLayout>
+  public class ActionMenuRenderer : ViewRenderer<ActionMenu, LinearLayout>
   {
     public ActionMenuRenderer(Context context) : base(context)
     {
     }
 
-    int atMost = MeasureSpec.MakeMeasureSpec(LayoutParams.WrapContent, Android.Views.MeasureSpecMode.AtMost);
+    int AT_MOST = MeasureSpec.MakeMeasureSpec(LayoutParams.WrapContent, Android.Views.MeasureSpecMode.AtMost);
 
     protected override void OnElementChanged(ElementChangedEventArgs<ActionMenu> e)
     {
@@ -35,31 +35,47 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         this.Element.PropertyChanged += HandlePropertyChanged;
       }
 
-      var layout = new FrameLayout(Context);
-      layout.RemoveAllViews();
-      if (Element.ToggleButton != null)
-      {
-        var toggleButtonRenderer = Platform.CreateRendererWithContext(Element.ToggleButton, Context).View;
+      var layout = new LinearLayout(Context);
 
-        var layoutParams = new FrameLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
-        layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
-        toggleButtonRenderer.LayoutParameters = layoutParams;
-        layout.AddView(toggleButtonRenderer);
-      }
+      layout.RemoveAllViews();
+      layout.Orientation = Orientation.Vertical;
+
       if (Element.Contents?.Count() > 0)
       {
-        foreach (var internalButton in Element.Contents)
+        for (var i = 0; i < Element.Contents.Count(); ++i)
         {
+          var internalButton = Element.Contents.ElementAt(i);
+
           var toggleButtonRenderer = Platform.CreateRendererWithContext(internalButton, Context).View;
-          var layoutParams = new FrameLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
+          if (toggleButtonRenderer is FloatingActionButtonViewRenderer fab)
+          {
+            fab.Index = Element.Contents.Count() - i;
+            if (!Element.Open)
+            {
+              fab.Hide();
+            }
+            else
+            {
+              fab.Show();
+            }
+          }
+          var layoutParams = new LinearLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
           layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
           toggleButtonRenderer.LayoutParameters = layoutParams;
           layout.AddView(toggleButtonRenderer);
         }
       }
-      layout.Measure(atMost, atMost);
+      if (Element.ToggleButton != null)
+      {
+        var toggleButtonRenderer = Platform.CreateRendererWithContext(Element.ToggleButton, Context).View;
+        var layoutParams = new LinearLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
+        layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
+        toggleButtonRenderer.LayoutParameters = layoutParams;
+        layout.AddView(toggleButtonRenderer);
+      }
+      layout.Measure(AT_MOST, AT_MOST);
       SetNativeControl(layout);
-      Measure(atMost, atMost);
+      Measure(AT_MOST, AT_MOST);
       Layout(0, 0, MeasuredWidth, MeasuredHeight);
     }
 

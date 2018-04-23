@@ -55,13 +55,25 @@ namespace FuryTechs.FloatingActionButton
     /// <param name="arg2">Event arguments</param>
     void ToggleMenu(object arg1, EventArgs arg2)
     {
+      ToggleButton.VerticalOptions = LayoutOptions.Center;
+      ToggleButton.HorizontalOptions = LayoutOptions.Center;
       if (!Open)
       {
+        foreach (var c in Contents)
+        {
+          c.Hide();
+          c.Show();
+        }
         Open = true;
         ToggleButton.RotateTo(315, 500, Easing.SpringOut);
       }
       else
       {
+        foreach (var c in Contents)
+        {
+          c.Show();
+          c.Hide();
+        }
         Open = false;
         ToggleButton.RotateTo(0, 500, Easing.SpringOut);
       }

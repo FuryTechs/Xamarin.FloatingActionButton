@@ -22,8 +22,14 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public Color ColorNormal
     {
-      get { return (Color)GetValue(ColorNormalProperty); }
-      set { SetValue(ColorNormalProperty, value); }
+      get
+      {
+        return (Color)GetValue(ColorNormalProperty);
+      }
+      set
+      {
+        SetValue(ColorNormalProperty, value);
+      }
     }
 
     /// <summary>
@@ -41,8 +47,14 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public Color ColorPressed
     {
-      get { return (Color)GetValue(ColorPressedProperty); }
-      set { SetValue(ColorPressedProperty, value); }
+      get
+      {
+        return (Color)GetValue(ColorPressedProperty);
+      }
+      set
+      {
+        SetValue(ColorPressedProperty, value);
+      }
     }
 
     /// <summary>
@@ -59,8 +71,14 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public Color ColorRipple
     {
-      get { return (Color)GetValue(ColorRippleProperty); }
-      set { SetValue(ColorRippleProperty, value); }
+      get
+      {
+        return (Color)GetValue(ColorRippleProperty);
+      }
+      set
+      {
+        SetValue(ColorRippleProperty, value);
+      }
     }
 
     /// <summary>
@@ -77,8 +95,14 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public bool HasShadow
     {
-      get { return (bool)GetValue(HasShadowProperty); }
-      set { SetValue(HasShadowProperty, value); }
+      get
+      {
+        return (bool)GetValue(HasShadowProperty);
+      }
+      set
+      {
+        SetValue(HasShadowProperty, value);
+      }
     }
 
     /// <summary>
@@ -119,8 +143,14 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public ICommand Command
     {
-      get { return (ICommand)GetValue(CommandProperty); }
-      set { SetValue(CommandProperty, value); }
+      get
+      {
+        return (ICommand)GetValue(CommandProperty);
+      }
+      set
+      {
+        SetValue(CommandProperty, value);
+      }
     }
 
     /// <summary>
@@ -128,8 +158,14 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public object CommandParameter
     {
-      get { return GetValue(CommandParameterProperty); }
-      set { SetValue(CommandParameterProperty, value); }
+      get
+      {
+        return GetValue(CommandParameterProperty);
+      }
+      set
+      {
+        SetValue(CommandParameterProperty, value);
+      }
     }
 
     /// <summary>
@@ -146,12 +182,27 @@ namespace FuryTechs.FloatingActionButton
     /// <summary>
     /// Show the control
     /// </summary>
-    public ShowHideDelegate Show { get; set; }
+    public ShowHideDelegate Show
+    {
+      get; set;
+    }
 
     /// <summary>
     /// Hide the control
     /// </summary>
-    public ShowHideDelegate Hide { get; set; }
+    public ShowHideDelegate Hide
+    {
+      get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this <see cref="T:FuryTechs.FloatingActionButton.ActionButton"/> is hidden.
+    /// </summary>
+    /// <value><c>true</c> if is hidden; otherwise, <c>false</c>.</value>
+    public bool IsHidden
+    {
+      get; set;
+    }
 
     /// <summary>
     /// Gets or sets the size of the button
@@ -168,7 +219,10 @@ namespace FuryTechs.FloatingActionButton
     /// <value>The size of the button.</value>
     public Abstraction.Size Size
     {
-      get { return (Abstraction.Size)GetValue(SizeProperty); }
+      get
+      {
+        return (Abstraction.Size)GetValue(SizeProperty);
+      }
       set
       {
         SetValue(SizeProperty, value);
@@ -220,7 +274,10 @@ namespace FuryTechs.FloatingActionButton
     /// Gets or sets the content of the Floating Action Button
     /// </summary>
     /// <value>The content of the button</value>
-    public ActionButtonContent Content { get; set; }
+    public ActionButtonContent Content
+    {
+      get; set;
+    }
 
     /// <summary>
     /// Handles the binding property changed delegate.
@@ -232,9 +289,12 @@ namespace FuryTechs.FloatingActionButton
                                                      object oldValue,
                                                      object newValue)
     {
-      if (bindable is ActionButton ab && newValue is ActionButtonContent content)
+      if (bindable is ActionButton ab)
       {
-        ab.Content = content;
+        if (newValue is ActionButtonContent content)
+        {
+          ab.Content = content;
+        }
       }
     }
   }
