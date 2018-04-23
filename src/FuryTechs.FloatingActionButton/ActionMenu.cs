@@ -119,20 +119,20 @@ namespace FuryTechs.FloatingActionButton
     /// </summary>
     public static readonly BindableProperty ContentsProperty =
                            BindableProperty.Create(nameof(Contents),
-                                                   typeof(IEnumerable<ActionButton>),
+                                                   typeof(ICollection<ActionButton>),
                                                    typeof(ActionMenu),
-                                                   null,
+                                                   new List<ActionButton>(),
                                                    propertyChanged: HandleBindingPropertyChangedDelegate);
 
     /// <summary>
     /// Gets or sets the content of the Floating Action Button
     /// </summary>
     /// <value>The content of the button</value>
-    public IEnumerable<ActionButton> Contents
+    public ICollection<ActionButton> Contents
     {
       get
       {
-        return (IEnumerable<ActionButton>)GetValue(ContentsProperty);
+        return (ICollection<ActionButton>)GetValue(ContentsProperty);
       }
       set
       {
@@ -153,7 +153,7 @@ namespace FuryTechs.FloatingActionButton
     {
       if (bindable is ActionMenu ab)
       {
-        if (newValue is IEnumerable<ActionButton> buttons)
+        if (newValue is ICollection<ActionButton> buttons)
         {
           ab.Contents = buttons;
         }
