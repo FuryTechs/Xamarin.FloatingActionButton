@@ -6,7 +6,7 @@ using Xamarin.Forms;
 namespace FuryTechs.FloatingActionButton
 {
   [ContentProperty("Content")]
-  public class ActionButton : View
+  public partial class ActionButton : View
   {
     /// <summary>
     /// Gets the color normal property

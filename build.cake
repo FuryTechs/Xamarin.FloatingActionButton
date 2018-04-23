@@ -2,6 +2,7 @@ var target = Argument("target", "Default");
 var local = BuildSystem.IsLocalBuild;
 var appName = "FuryTechs.FloatingActionButton";
 var versionParam = Argument<string>("BuildVersion");
+var outputDirectory = Argument<string>("OutputDirectory");
 var versionParts = versionParam.Split('.');
 
 var version = string.Format("{0}.{1}.{2}", versionParts[0],versionParts[1],versionParts[2]);
@@ -110,7 +111,7 @@ Task("Package Library")
                                                                       },
                                     BasePath                = "./src",
                                     NoPackageAnalysis       = true,
-                                    OutputDirectory         = "./.nuget"
+                                    OutputDirectory         = outputDirectory
                                 };
 
     NuGetPack(nuGetPackSettings);

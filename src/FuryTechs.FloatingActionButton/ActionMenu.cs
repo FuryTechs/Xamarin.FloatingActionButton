@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FuryTechs.FloatingActionButton.ContentTypes;
 using Xamarin.Forms;
 
 namespace FuryTechs.FloatingActionButton

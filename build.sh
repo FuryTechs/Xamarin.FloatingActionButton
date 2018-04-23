@@ -27,6 +27,7 @@ SCRIPT="build.cake"
 TARGET="Default"
 CONFIGURATION="Release"
 VERBOSITY="verbose"
+OUTPUT_DIRECTORY="nuget"
 BUILD_VERSION="0.0.2"
 DRYRUN=
 SHOW_VERSION=false
@@ -50,6 +51,11 @@ done
 # Make sure the tools folder exist.
 if [ ! -d "$TOOLS_DIR" ]; then
 mkdir "$TOOLS_DIR"
+fi
+
+# Make sure the tools folder exist.
+if [ ! -d "$OUTPUT_DIRECTORY" ]; then
+mkdir "$OUTPUT_DIRECTORY"
 fi
 
 # Make sure that packages.config exist.
@@ -98,5 +104,5 @@ fi
 if $SHOW_VERSION; then
 exec mono "$CAKE_EXE" -version
 else
-exec mono "$CAKE_EXE" $SCRIPT -BuildVersion=$BUILD_VERSION -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
+exec mono "$CAKE_EXE" $SCRIPT -BuildVersion=$BUILD_VERSION -OutputDirectory=$OUTPUT_DIRECTORY -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
 fi

@@ -4,8 +4,8 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
+using FuryTechs.FloatingActionButton;
 using FuryTechs.FloatingActionButton.Abstraction;
-using FuryTechs.FloatingActionButton.ContentTypes;
 using FuryTechs.FloatingActionButton.Droid.Renderers.ContentTypes;
 using Xamarin.Forms.Platform.Android;
 

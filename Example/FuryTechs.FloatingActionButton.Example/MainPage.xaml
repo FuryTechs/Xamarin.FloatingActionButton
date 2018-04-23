@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:fab="clr-namespace:FuryTechs.FloatingActionButton;assembly=FuryTechs.FloatingActionButton"
-              xmlns:fabContent="clr-namespace:FuryTechs.FloatingActionButton.ContentTypes;assembly=FuryTechs.FloatingActionButton"
               x:Class="FuryTechs.FloatingActionButton.Example.MainPage">
   <ContentPage.Content>
     <AbsoluteLayout>
@@ -16,14 +15,14 @@
                        AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize">
         <fab:ActionMenu.ToggleButton>
           <fab:ActionButton ColorNormal="Red" Size="Normal">
-            <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+            <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
           </fab:ActionButton>
         </fab:ActionMenu.ToggleButton>
         <fab:ActionButton x:Name="Fab" ColorNormal="Blue" Size="Normal">
-          <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
         </fab:ActionButton>
         <fab:ActionButton x:Name="MiniFab" ColorNormal="Green" Size="Mini">
-          <fabContent:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
         </fab:ActionButton>
       </fab:ActionMenu>
     </AbsoluteLayout>
