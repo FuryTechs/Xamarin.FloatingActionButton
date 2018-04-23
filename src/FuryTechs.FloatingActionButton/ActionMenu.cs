@@ -7,6 +7,9 @@ namespace FuryTechs.FloatingActionButton
   [ContentProperty(nameof(Contents))]
   public class ActionMenu : View
   {
+    /// <summary>
+    /// The default toggle button.
+    /// </summary>
     public static readonly ActionButton DEFAULT_TOGGLE_BUTTON = new ActionButton()
     {
       HorizontalOptions = LayoutOptions.Center,
@@ -17,6 +20,9 @@ namespace FuryTechs.FloatingActionButton
       }
     };
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="T:FuryTechs.FloatingActionButton.ActionMenu"/> class.
+    /// </summary>
     public ActionMenu()
     {
       Contents = new List<ActionButton>();
