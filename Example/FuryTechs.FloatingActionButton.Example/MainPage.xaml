@@ -18,12 +18,14 @@
             <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
           </fab:ActionButton>
         </fab:ActionMenu.ToggleButton>
-        <fab:ActionButton x:Name="Fab" ColorNormal="Blue" Size="Normal">
-          <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
-        </fab:ActionButton>
-        <fab:ActionButton x:Name="MiniFab" ColorNormal="Green" Size="Mini">
-          <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
-        </fab:ActionButton>
+        <fab:ActionMenu.Contents>
+          <fab:ActionButton x:Name="Fab" ColorNormal="Blue" Size="Normal">
+            <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          </fab:ActionButton>
+          <fab:ActionButton x:Name="MiniFab" ColorNormal="Green" Size="Mini">
+            <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          </fab:ActionButton>
+        </fab:ActionMenu.Contents>
       </fab:ActionMenu>
     </AbsoluteLayout>
   </ContentPage.Content>

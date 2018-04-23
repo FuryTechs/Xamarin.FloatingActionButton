@@ -121,8 +121,7 @@ namespace FuryTechs.FloatingActionButton
                            BindableProperty.Create(nameof(Contents),
                                                    typeof(ICollection<ActionButton>),
                                                    typeof(ActionMenu),
-                                                   new List<ActionButton>(),
-                                                   propertyChanged: HandleBindingPropertyChangedDelegate);
+                                                   new List<ActionButton>());
 
     /// <summary>
     /// Gets or sets the content of the Floating Action Button
