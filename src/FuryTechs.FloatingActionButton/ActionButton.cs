@@ -1,109 +1,34 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using FuryTechs.FloatingActionButton.Abstraction;
 using Xamarin.Forms;
 
 namespace FuryTechs.FloatingActionButton
 {
-  [ContentProperty("Content")]
-  public partial class ActionButton : View
+  [ContentProperty(nameof(Content))]
+  public class ActionButton : View
   {
+    #region Bindable properties
     /// <summary>
-    /// Gets the color normal property
+    /// The color property.
     /// </summary>
-    public static readonly BindableProperty ColorNormalProperty =
-        BindableProperty.Create(nameof(ColorNormal),
-            typeof(Color),
-            typeof(ActionButton),
-            Color.Black);
-
-    /// <summary>
-    /// Gets or sets the color of the button
-    /// </summary>
-    public Color ColorNormal
-    {
-      get
-      {
-        return (Color)GetValue(ColorNormalProperty);
-      }
-      set
-      {
-        SetValue(ColorNormalProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets the color pressed property
-    /// </summary>
-    public static readonly BindableProperty ColorPressedProperty =
-        BindableProperty.Create(nameof(ColorPressed),
-            typeof(Color),
-            typeof(ActionButton),
-            Color.White);
-
-
-    /// <summary>
-    /// Gets or sets the color pressed property
-    /// </summary>
-    public Color ColorPressed
-    {
-      get
-      {
-        return (Color)GetValue(ColorPressedProperty);
-      }
-      set
-      {
-        SetValue(ColorPressedProperty, value);
-      }
-    }
+    public static readonly BindableProperty ColorProperty =
+      BindableProperty.Create(nameof(Color),
+                              typeof(Color),
+                              typeof(ActionButton),
+                              Color.Transparent);
 
     /// <summary>
     /// Gets the ripple color property
     /// </summary>
     public static readonly BindableProperty ColorRippleProperty =
         BindableProperty.Create(nameof(ColorRipple),
-            typeof(Color),
-            typeof(ActionButton),
-            Color.White);
+                                typeof(Color),
+                                typeof(ActionButton),
+                                Color.White
+                               );
 
-    /// <summary>
-    /// Gets or sets the ripple color of the floating action button
-    /// </summary>
-    public Color ColorRipple
-    {
-      get
-      {
-        return (Color)GetValue(ColorRippleProperty);
-      }
-      set
-      {
-        SetValue(ColorRippleProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets the has shadow property
-    /// </summary>
-    public static readonly BindableProperty HasShadowProperty =
-        BindableProperty.Create(nameof(HasShadow),
-            typeof(bool),
-            typeof(ActionButton),
-            true);
-
-    /// <summary>
-    /// Gets or sets the has shadow property
-    /// </summary>
-    public bool HasShadow
-    {
-      get
-      {
-        return (bool)GetValue(HasShadowProperty);
-      }
-      set
-      {
-        SetValue(HasShadowProperty, value);
-      }
-    }
 
     /// <summary>
     /// Gets the command property
@@ -125,6 +50,84 @@ namespace FuryTechs.FloatingActionButton
             typeof(ActionButton),
             null,
             propertyChanged: (bindable, oldvalue, newvalue) => ((ActionButton)bindable).CommandCanExecuteChanged(bindable, EventArgs.Empty));
+
+    /// <summary>
+    /// Gets or sets the size of the button
+    /// </summary>
+    public static readonly BindableProperty SizeProperty =
+                           BindableProperty.Create(nameof(Size),
+                                                   typeof(Abstraction.Size),
+                                                   typeof(ActionButton),
+                                                   default(Abstraction.Size));
+
+    /// <summary>
+    /// Gets or sets the content of the Floating Action Button
+    /// </summary>
+    public static readonly BindableProperty ContentProperty =
+                           BindableProperty.Create(nameof(Content),
+                                                   typeof(ActionButtonContent),
+                                                   typeof(ActionButton),
+                                                   null);
+
+    /// <summary>
+    /// The clicked property.
+    /// </summary>
+    public static readonly BindableProperty ClickedProperty =
+                           BindableProperty.Create(nameof(Clicked),
+                                                   typeof(Action<object, EventArgs>),
+                                                   typeof(ActionButton));
+
+    /// <summary>
+    /// The animation duration property.
+    /// </summary>
+    public static readonly BindableProperty AnimationDurationProperty =
+      BindableProperty.Create(nameof(AnimationDuration),
+                              typeof(int),
+                              typeof(ActionButton),
+                              (int)300);
+    #endregion
+
+    /// <summary>
+    /// Gets or sets the duration of the animation.
+    /// </summary>
+    /// <value>The duration of the animation.</value>
+    public int AnimationDuration
+    {
+      get
+      {
+        return (int)GetValue(AnimationDurationProperty);
+      }
+      set
+      {
+        SetValue(AnimationDurationProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// The button color property.
+    /// </summary>
+    public static readonly BindableProperty ButtonColorProperty =
+                           BindableProperty.Create(nameof(ButtonColor),
+                                                   typeof(Color),
+                                                   typeof(ActionButton),
+                                                   Color.NavajoWhite);
+
+    /// <summary>
+    /// Gets or sets the color of the button.
+    /// </summary>
+    /// <value>The color of the button.</value>
+    public Color ButtonColor
+    {
+      get
+      {
+        return (Color)GetValue(ButtonColorProperty);
+      }
+
+      set
+      {
+        SetValue(ButtonColorProperty, value);
+      }
+    }
 
     /// <summary>
     /// Executes if enabled or not based on can execute changed
@@ -169,15 +172,45 @@ namespace FuryTechs.FloatingActionButton
     }
 
     /// <summary>
-    /// Show Hide Delegate
+    /// Gets or sets the color.
     /// </summary>
-    public delegate void ShowHideDelegate();
+    /// <value>The color.</value>
+    public Color Color
+    {
+      get
+      {
+        return (Color)GetValue(ColorProperty);
+      }
+      set
+      {
+        SetValue(ColorProperty, value);
+        if (Content?.Color == Color.Transparent)
+        {
+          Content.Color = value;
+        }
+      }
+    }
 
     /// <summary>
-    /// Attach to list view delegate
+    /// Gets or sets the ripple color of the floating action button
     /// </summary>
-    /// <param name="listView"></param>
-    public delegate void AttachToListViewDelegate(ListView listView);
+    public Color ColorRipple
+    {
+      get
+      {
+        return (Color)GetValue(ColorRippleProperty);
+      }
+      set
+      {
+        SetValue(ColorRippleProperty, value);
+      }
+    }
+
+
+    /// <summary>
+    /// Show Hide Delegate
+    /// </summary>
+    public delegate void ShowHideDelegate(bool animate = true);
 
     /// <summary>
     /// Show the control
@@ -207,15 +240,6 @@ namespace FuryTechs.FloatingActionButton
     /// <summary>
     /// Gets or sets the size of the button
     /// </summary>
-    public static readonly BindableProperty SizeProperty =
-                           BindableProperty.Create(nameof(Size),
-                                                   typeof(Abstraction.Size),
-                                                   typeof(ActionButton),
-                                                   default(Abstraction.Size));
-
-    /// <summary>
-    /// Gets or sets the size of the button
-    /// </summary>
     /// <value>The size of the button.</value>
     public Abstraction.Size Size
     {
@@ -228,11 +252,6 @@ namespace FuryTechs.FloatingActionButton
         SetValue(SizeProperty, value);
       }
     }
-
-    public static readonly BindableProperty ClickedProperty =
-                           BindableProperty.Create(nameof(Clicked),
-                                                   typeof(Action<object, EventArgs>),
-                                                   typeof(ActionButton));
 
     /// <summary>
     /// Action to call when clicked
@@ -249,6 +268,7 @@ namespace FuryTechs.FloatingActionButton
       }
     }
 
+
     void OnCommandChanged()
     {
       if (Command != null)
@@ -264,19 +284,34 @@ namespace FuryTechs.FloatingActionButton
     /// <summary>
     /// Gets or sets the content of the Floating Action Button
     /// </summary>
-    public static readonly BindableProperty ContentProperty =
-                           BindableProperty.Create(nameof(Content),
-                                                   typeof(ActionButtonContent),
-                                                   typeof(ActionButton),
-                                                   null, propertyChanged: HandleBindingPropertyChangedDelegate);
-
-    /// <summary>
-    /// Gets or sets the content of the Floating Action Button
-    /// </summary>
     /// <value>The content of the button</value>
     public ActionButtonContent Content
     {
-      get; set;
+      get
+      {
+        return (ActionButtonContent)GetValue(ContentProperty);
+      }
+      set
+      {
+        SetValue(ContentProperty, value);
+      }
+    }
+
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      base.OnPropertyChanged(propertyName);
+      switch (propertyName)
+      {
+        case nameof(Color):
+          {
+            if (Content != null && Content.Color == Color.Transparent && Color != Color.Transparent)
+            {
+              Content.Color = Color;
+            }
+
+          }
+          break;
+      }
     }
 
     /// <summary>

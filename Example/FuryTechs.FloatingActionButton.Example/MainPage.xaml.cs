@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -13,6 +16,26 @@ namespace FuryTechs.FloatingActionButton.Example
       InitializeComponent();
       //Fab.Clicked += Fab_Clicked;
       //MiniFab.Clicked += MiniFab_Clicked;
+      AddButton();
+
+    }
+
+    void AddButton() {
+      Task.Factory.StartNew(() =>
+      {
+        Thread.Sleep(5000);
+        Menu.Contents.Add(new ActionButton()
+        {
+          ButtonColor = Color.AntiqueWhite,
+          Color = Color.Black,
+          ColorRipple = Color.DarkRed,
+          Size = Abstraction.Size.Normal,
+          Content = new FontAwesomeIcon()
+          {
+            Icon = FAIcons.FACheck
+          }
+        });
+      });
     }
 
     void Fab_Clicked(object arg1, EventArgs arg2)

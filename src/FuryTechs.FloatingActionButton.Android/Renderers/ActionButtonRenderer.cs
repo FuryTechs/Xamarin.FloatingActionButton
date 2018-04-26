@@ -18,10 +18,10 @@ using FuryTechs.FloatingActionButton.Droid.Renderers.ContentTypes;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(ActionButton), typeof(FloatingActionButtonViewRenderer))]
+[assembly: ExportRenderer(typeof(ActionButton), typeof(ActionButtonRenderer))]
 namespace FuryTechs.FloatingActionButton.Droid.Renderers
 {
-  public class FloatingActionButtonViewRenderer : ViewRenderer<ActionButton, FrameLayout>
+  public class ActionButtonRenderer : ViewRenderer<ActionButton, FrameLayout>
   {
 
     /// <summary>
@@ -51,13 +51,14 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     /// <value>The index.</value>
     public int Index
     {
-      get; set;
+      get; 
+      set;
     }
 
     /// <summary>
     /// Construtor
     /// </summary>
-    public FloatingActionButtonViewRenderer(Context ctx) : base(ctx)
+    public ActionButtonRenderer(Context ctx) : base(ctx)
     {
       float d = Context.Resources.DisplayMetrics.Density;
       MARGIN = (int)(MARGIN_DIPS * d); // margin in pixels
@@ -95,14 +96,16 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       Element.Show = Show;
       Element.Hide = Hide;
       Element.Margin = new Thickness(MARGIN);
+      if (Element.Color != Color.Transparent)
+      {
+        Element.Content.Color = Element.Color;
+      }
 
       SetFabSize(Element.Size);
 
-      fab.BackgroundTintList = ColorStateList.ValueOf(Element.ColorNormal.ToAndroid());
+      fab.BackgroundTintList = ColorStateList.ValueOf(Element.ButtonColor.ToAndroid());
       fab.RippleColor = Element.ColorRipple.ToAndroid();
-      fab.Elevation = 1;
       fab.Click += Fab_Click;
-
 
       var frameLayout = new FrameLayout(Context);
 
@@ -112,6 +115,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       if (Element.Content != null)
       {
         var content = Platform.CreateRendererWithContext(Element.Content, Context).View;
+
         if (content is IConvertable bitmapContent)
         {
           bitmapContent.SetSize(Element.Size);
@@ -126,12 +130,41 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     }
 
     /// <summary>
+    /// Gets or sets the show easing.
+    /// </summary>
+    /// <value>The show easing.</value>
+    public Easing ShowEasing
+    {
+      get;
+      set;
+    } = Easing.SpringOut;
+
+    /// <summary>
+    /// Gets or sets the hide easing.
+    /// </summary>
+    /// <value>The hide easing.</value>
+    public Easing HideEasing
+    {
+      get;
+      set;
+    } = Easing.CubicInOut;
+
+    /// <summary>
     /// Show
     /// </summary>
-    public void Show()
+    public void Show(bool animate = true)
     {
       fab?.Show();
-      Element.TranslateTo(0, 0, 500, Easing.SpringOut);
+      if (animate)
+      {
+        Element.TranslateTo(0, 0, (uint)Math.Max(0, Element.AnimationDuration), ShowEasing);
+        Element.ScaleTo(1, (uint)Math.Max(0, Element.AnimationDuration), ShowEasing);
+      }
+      else
+      {
+        Element.TranslationY = 0;
+        Element.Scale = 1;
+      }
       Element.IsHidden = false;
     }
 
@@ -139,10 +172,17 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     /// <summary>
     /// Hide!
     /// </summary>
-    public void Hide()
+    public void Hide(bool animate = true)
     {
       fab.Hide();
-      Element.TranslateTo(0, (Height / Context.Resources.DisplayMetrics.Density) * Index, 500, Easing.CubicInOut);
+      if (animate)
+      {
+        Element.TranslateTo(0, (Height / Context.Resources.DisplayMetrics.Density) * Index, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
+        Element.ScaleTo(0, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
+      }else{
+        Element.TranslationY = (Height / Context.Resources.DisplayMetrics.Density) * Index;
+        Element.Scale = 0;
+      }
       Element.IsHidden = true;
     }
 
@@ -153,30 +193,22 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       {
         Tracker.UpdateLayout();
       }
-      else if (e.PropertyName == ActionButton.ColorNormalProperty.PropertyName)
+      else if (e.PropertyName == ActionButton.ButtonColorProperty.PropertyName)
       {
-        fab.BackgroundTintList = ColorStateList.ValueOf(Element.ColorNormal.ToAndroid());
+        fab.BackgroundTintList = ColorStateList.ValueOf(Element.BackgroundColor.ToAndroid());
       }
-      //else if (e.PropertyName == ActionButton.ColorPressedProperty.PropertyName)
-      //{
-      //  fab.ColorPressed = Element.ColorPressed.ToAndroid();
-      //}
+      else if (e.PropertyName == ActionButton.ColorProperty.PropertyName)
+      {
+        Element.Content.Color = Element.Color;
+      }
       else if (e.PropertyName == ActionButton.ColorRippleProperty.PropertyName)
       {
         fab.RippleColor = Element.ColorRipple.ToAndroid();
       }
-      //else if (e.PropertyName == ActionButton.ImageNameProperty.PropertyName)
-      //{
-      //  SetFabImage(Element.ImageName);
-      //}
       else if (e.PropertyName == ActionButton.SizeProperty.PropertyName)
       {
         SetFabSize(Element.Size);
       }
-      //else if (e.PropertyName == ActionButton.HasShadowProperty.PropertyName)
-      //{
-      //  fab.HasShadow = Element.HasShadow;
-      //}
     }
 
     void SetFabSize(Abstraction.Size size)

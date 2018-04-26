@@ -55,7 +55,7 @@
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Renderers\FloatingActionButtonRenderer.cs" />
+    <Compile Include="Renderers\ActionButtonRenderer.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\ContentTypes\ActionButtonLabelRenderer.cs" />

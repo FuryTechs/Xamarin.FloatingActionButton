@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:self="clr-namespace:FuryTechs.FloatingActionButton.Example"
               xmlns:fab="clr-namespace:FuryTechs.FloatingActionButton;assembly=FuryTechs.FloatingActionButton"
               x:Class="FuryTechs.FloatingActionButton.Example.MainPage">
   <ContentPage.Content>
@@ -9,21 +10,24 @@
                     AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
         <Label Text="Sajt" />
       </StackLayout>
-      <fab:ActionMenu AbsoluteLayout.LayoutFlags="PositionProportional"
+      <fab:ActionMenu x:Name="Menu"
+                       AbsoluteLayout.LayoutFlags="PositionProportional"
+                       AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
                        VerticalOptions="EndAndExpand"
-                       HorizontalOptions="EndAndExpand"
-                       AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize">
+                       HorizontalOptions="EndAndExpand">
         <fab:ActionMenu.ToggleButton>
-          <fab:ActionButton ColorNormal="Red" Size="Normal">
+          <fab:ActionButton ButtonColor="Green" Color="Fuchsia" Size="Normal">
             <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
           </fab:ActionButton>
         </fab:ActionMenu.ToggleButton>
         <fab:ActionMenu.Contents>
-          <fab:ActionButton x:Name="Fab" ColorNormal="Blue" Size="Normal">
-            <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          <fab:ActionButton x:Name="Fab" ButtonColor="Blue" Size="Normal"
+                             Color="Red">
+            <fab:FontAwesomeIcon Icon="FAPlus" />
           </fab:ActionButton>
-          <fab:ActionButton x:Name="MiniFab" ColorNormal="Green" Size="Mini">
-            <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          <fab:ActionButton x:Name="MiniFab" ButtonColor="Green" Size="Mini"
+                             Color="White">
+            <fab:FontAwesomeIcon Icon="FAPlus" />
           </fab:ActionButton>
         </fab:ActionMenu.Contents>
       </fab:ActionMenu>

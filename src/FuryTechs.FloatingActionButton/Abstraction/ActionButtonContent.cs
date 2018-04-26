@@ -8,23 +8,30 @@ namespace FuryTechs.FloatingActionButton.Abstraction
 {
   public abstract class ActionButtonContent : View
   {
-    public static readonly BindableProperty ColorProperty = 
-                           BindableProperty.Create(nameof(Color), 
-                                                   typeof(Color), 
-                                                   typeof(ActionButtonContent), 
-                                                   Color.LightGray,
-                                                   propertyChanged: HandleBindingPropertyChangedDelegate);
-    public Color Color { get; set; }
+    /// <summary>
+    /// The color property.
+    /// </summary>
+    public static readonly BindableProperty ColorProperty =
+                           BindableProperty.Create(nameof(Color),
+                                                   typeof(Color),
+                                                   typeof(ActionButtonContent),
+                                                   Color.Transparent);
 
-    static void HandleBindingPropertyChangedDelegate(BindableObject bindable, object oldValue, object newValue)
+    /// <summary>
+    /// Gets or sets the color.
+    /// </summary>
+    /// <value>The color.</value>
+    public Color Color
     {
-      if(bindable is ActionButtonContent abc) {
-        if(newValue is Color c) {
-          abc.Color = c;
-        }
+      get
+      {
+        return (Color)GetValue(ColorProperty);
+      }
+
+      set
+      {
+        SetValue(ColorProperty, value);
       }
     }
-
-
   }
 }
