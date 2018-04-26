@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System.ComponentModel;
+using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -22,6 +23,8 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers.ContentTypes
     public void SetSize(Size size)
     {
       this.size = size;
+      if (Control != null)
+        Control.TextSize = this.size == Size.Mini ? 14 : 18;
     }
 
     public Bitmap ToBitmap()
@@ -62,7 +65,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers.ContentTypes
         Text = ((char)Element.Icon).ToString(),
         Gravity = GravityFlags.CenterHorizontal | GravityFlags.CenterVertical,
         Typeface = Typeface.CreateFromAsset(Context.Assets, "FontAwesome.ttf"),
-        TextSize = size == Size.Normal ? 38 : 28,
+        TextSize = size == Size.Normal ? 28 : 12,
         TextAlignment = TextAlignment.Center,
       });
       Control.SetTextColor(Element.Color.ToAndroid());

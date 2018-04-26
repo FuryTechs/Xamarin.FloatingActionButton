@@ -32,15 +32,13 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       var temp = await Task.FromResult(DateTime.Now);
     }
 
-    private const int MARGIN_DIPS = 16;
+    private const int MARGIN_DIPS = 8;
     private const int FAB_HEIGHT_NORMAL = 56;
     private const int FAB_HEIGHT_MINI = 40;
     private const int FAB_FRAME_HEIGHT_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_NORMAL;
-    private const int FAB_FRAME_WIDTH_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_NORMAL;
-    private const int FAB_MINI_FRAME_HEIGHT_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
-    private const int FAB_MINI_FRAME_WIDTH_WITH_PADDING = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
-
+    private const int FAB_FRAME_HEIGHT_WITH_PADDING_MINI = (MARGIN_DIPS * 2) + FAB_HEIGHT_MINI;
     private readonly int MARGIN;
+
 
     private readonly int AT_MOST = MeasureSpec.MakeMeasureSpec(LayoutParams.WrapContent, MeasureSpecMode.AtMost);
     private readonly Android.Support.Design.Widget.FloatingActionButton fab;
@@ -51,7 +49,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     /// <value>The index.</value>
     public int Index
     {
-      get; 
+      get;
       set;
     }
 
@@ -62,14 +60,12 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     {
       float d = Context.Resources.DisplayMetrics.Density;
       MARGIN = (int)(MARGIN_DIPS * d); // margin in pixels
+
       fab = new Android.Support.Design.Widget.FloatingActionButton(Context);
       fab.Measure(AT_MOST, AT_MOST);
       var lp = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
       lp.Gravity = GravityFlags.CenterVertical | GravityFlags.CenterHorizontal;
-      lp.LeftMargin = MARGIN;
-      lp.TopMargin = MARGIN;
-      lp.BottomMargin = MARGIN;
-      lp.RightMargin = MARGIN;
+      lp.SetMargins(MARGIN, MARGIN, MARGIN, MARGIN);
       fab.LayoutParameters = lp;
     }
 
@@ -89,13 +85,13 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
 
       if (this.Element != null)
       {
-        //UpdateContent ();
         this.Element.PropertyChanged += HandlePropertyChanged;
       }
 
       Element.Show = Show;
       Element.Hide = Hide;
-      Element.Margin = new Thickness(MARGIN);
+      Element.Margin = MARGIN;
+
       if (Element.Color != Color.Transparent)
       {
         Element.Content.Color = Element.Color;
@@ -108,7 +104,6 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       fab.Click += Fab_Click;
 
       var frameLayout = new FrameLayout(Context);
-
       frameLayout.RemoveAllViews();
       frameLayout.AddView(fab);
 
@@ -179,7 +174,9 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       {
         Element.TranslateTo(0, (Height / Context.Resources.DisplayMetrics.Density) * Index, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
         Element.ScaleTo(0, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
-      }else{
+      }
+      else
+      {
         Element.TranslationY = (Height / Context.Resources.DisplayMetrics.Density) * Index;
         Element.Scale = 0;
       }
@@ -216,16 +213,18 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       if (size == Abstraction.Size.Mini)
       {
         fab.Size = Android.Support.Design.Widget.FloatingActionButton.SizeMini;
+        Element.WidthRequest = FAB_FRAME_HEIGHT_WITH_PADDING_MINI;
+        Element.HeightRequest = FAB_FRAME_HEIGHT_WITH_PADDING_MINI;
       }
       else
       {
         fab.Size = Android.Support.Design.Widget.FloatingActionButton.SizeNormal;
+        Element.WidthRequest = FAB_FRAME_HEIGHT_WITH_PADDING;
+        Element.HeightRequest = FAB_FRAME_HEIGHT_WITH_PADDING;
       }
+      fab.Measure(AT_MOST, AT_MOST);
 
-      Element.WidthRequest = FAB_FRAME_HEIGHT_WITH_PADDING;
-      Element.HeightRequest = FAB_FRAME_HEIGHT_WITH_PADDING;
       Element.Margin = MARGIN;
-
       Element.Layout(new Rectangle(0, 0, Element.WidthRequest, Element.HeightRequest));
     }
 

@@ -43,36 +43,40 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         this.Element.PropertyChanged += HandlePropertyChanged;
       }
 
-      LayoutMode = Android.Views.ViewLayoutMode.OpticalBounds;
-
-      ReCreateVisualElement();
+      CreateVisualElements();
     }
 
-    void ReCreateVisualElement()
+    void CreateVisualElements()
     {
       RemoveAllViews();
       var layout = new LinearLayout(Context);
-
       layout.RemoveAllViews();
       layout.Orientation = Orientation.Vertical;
 
+      var lpar = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
+      lpar.Gravity = Android.Views.GravityFlags.Bottom | Android.Views.GravityFlags.CenterHorizontal;
+      layout.LayoutParameters = lpar;
+
       ChildrenLayout = new LinearLayout(Context)
       {
-        Orientation = Orientation.Vertical
+        Orientation = Orientation.Vertical,
+        LayoutParameters = lpar
       };
+
       AttachActionButtons();
+
       layout.AddView(ChildrenLayout);
 
       if (Element.ToggleButton != null)
       {
         var toggleButtonRenderer = Platform.CreateRendererWithContext(Element.ToggleButton, Context).View;
         var layoutParams = new LinearLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
-        layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
         toggleButtonRenderer.LayoutParameters = layoutParams;
         layout.AddView(toggleButtonRenderer);
       }
 
       layout.Measure(AT_MOST, AT_MOST);
+      Measure(AT_MOST, AT_MOST);
       SetNativeControl(layout);
     }
 
@@ -85,19 +89,21 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         {
           var internalButton = Element.Contents.ElementAt(i);
 
-          var toggleButtonRenderer = Platform.CreateRendererWithContext(internalButton, Context).View;
-          if (toggleButtonRenderer is ActionButtonRenderer fab)
+          var buttonRenderer = Platform.CreateRendererWithContext(internalButton, Context).View;
+          if (buttonRenderer is ActionButtonRenderer fab)
           {
             fab.Index = Element.Contents.Count() - i;
           }
-          var layoutParams = new LinearLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
-          layoutParams.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.CenterHorizontal;
-          toggleButtonRenderer.LayoutParameters = layoutParams;
-          ChildrenLayout.AddView(toggleButtonRenderer);
+          var layoutParams = new LinearLayout.LayoutParams(buttonRenderer.Width, buttonRenderer.Height);
+          layoutParams.Gravity = Android.Views.GravityFlags.CenterHorizontal | Android.Views.GravityFlags.Bottom;
+          buttonRenderer.LayoutParameters = layoutParams;
+          ChildrenLayout.AddView(buttonRenderer);
         }
       }
       ChildrenLayout.Measure(AT_MOST, AT_MOST);
+      ChildrenLayout.Measure(AT_MOST, MeasureSpec.MakeMeasureSpec(ChildrenLayout.MeasuredHeight + 100, Android.Views.MeasureSpecMode.Exactly));
       ChildrenLayout.Layout(0, 0, ChildrenLayout.MeasuredWidth, ChildrenLayout.MeasuredHeight);
+
     }
 
     void HandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -112,12 +118,11 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         {
           AttachActionButtons();
           Control.Measure(AT_MOST, AT_MOST);
-          Measure(MeasureSpec.MakeMeasureSpec(Control.MeasuredWidth, Android.Views.MeasureSpecMode.Exactly), MeasureSpec.MakeMeasureSpec(Control.MeasuredHeight, Android.Views.MeasureSpecMode.Exactly));
+          Measure(MeasureSpec.MakeMeasureSpec(Control.MeasuredWidth, Android.Views.MeasureSpecMode.Exactly), MeasureSpec.MakeMeasureSpec(Control.MeasuredHeight + 100, Android.Views.MeasureSpecMode.Exactly));
           Element.HeightRequest = MeasuredHeight / Context.Resources.DisplayMetrics.Density;
           Element.WidthRequest = MeasuredWidth / Context.Resources.DisplayMetrics.Density;
-          Tracker?.UpdateLayout();
         });
+      }
     }
   }
-}
 }
