@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
 using Android.Content;
 using Android.Content.Res;
-using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using FuryTechs.FloatingActionButton;
@@ -60,7 +52,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     {
       float d = Context.Resources.DisplayMetrics.Density;
       MARGIN = (int)(MARGIN_DIPS * d); // margin in pixels
-
+      
       fab = new Android.Support.Design.Widget.FloatingActionButton(Context);
       fab.Measure(AT_MOST, AT_MOST);
       var lp = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
@@ -101,6 +93,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
 
       fab.BackgroundTintList = ColorStateList.ValueOf(Element.ButtonColor.ToAndroid());
       fab.RippleColor = Element.ColorRipple.ToAndroid();
+      //fab.RippleColor = Element.ColorRipple.ToAndroid();
       fab.Click += Fab_Click;
 
       var frameLayout = new FrameLayout(Context);
@@ -212,6 +205,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     {
       if (size == Abstraction.Size.Mini)
       {
+        
         fab.Size = Android.Support.Design.Widget.FloatingActionButton.SizeMini;
         Element.WidthRequest = FAB_FRAME_HEIGHT_WITH_PADDING_MINI;
         Element.HeightRequest = FAB_FRAME_HEIGHT_WITH_PADDING_MINI;
