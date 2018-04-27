@@ -24,7 +24,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers.ContentTypes
     {
       this.size = size;
       if (Control != null)
-        Control.TextSize = this.size == Size.Mini ? 14 : 18;
+        Control.TextSize = this.size == Size.Mini ? 18 : 28;
     }
 
     public Bitmap ToBitmap()

@@ -16,11 +16,11 @@
                        VerticalOptions="EndAndExpand"
                        HorizontalOptions="EndAndExpand">
         <fab:ActionMenu.ToggleButton>
-          <fab:ActionButton ButtonColor="Green" Color="Fuchsia" Size="Normal">
-            <fab:FontAwesomeIcon Icon="FAPlus" Color="White" />
+          <fab:ActionButton ButtonColor="Green" Color="White" Size="Normal">
+            <fab:FontAwesomeIcon Icon="FAPlus" />
           </fab:ActionButton>
         </fab:ActionMenu.ToggleButton>
-      <!--  <fab:ActionMenu.Contents>
+        <fab:ActionMenu.Contents>
           <fab:ActionButton x:Name="Fab" ButtonColor="Blue" Size="Normal"
                              Color="Red">
             <fab:FontAwesomeIcon Icon="FAPlus" />
@@ -29,7 +29,7 @@
                              Color="White">
             <fab:FontAwesomeIcon Icon="FAPlus" />
           </fab:ActionButton>
-        </fab:ActionMenu.Contents>-->
+        </fab:ActionMenu.Contents>
       </fab:ActionMenu>
     </AbsoluteLayout>
   </ContentPage.Content>

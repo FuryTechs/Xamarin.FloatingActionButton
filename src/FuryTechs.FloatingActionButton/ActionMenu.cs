@@ -64,6 +64,13 @@ namespace FuryTechs.FloatingActionButton
 
     void CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
+      if (!Open)
+      {
+        foreach (var item in e.NewItems)
+        {
+          (item as ActionButton).Hide?.Invoke(false);
+        }
+      }
       OnPropertyChanged(nameof(Contents));
     }
 

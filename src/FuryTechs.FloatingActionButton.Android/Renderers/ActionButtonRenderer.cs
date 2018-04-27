@@ -106,6 +106,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       var frameLayout = new FrameLayout(Context);
       frameLayout.RemoveAllViews();
       frameLayout.AddView(fab);
+      //frameLayout.SetBackgroundColor(Element.ButtonColor.MultiplyAlpha(.5).ToAndroid());
 
       if (Element.Content != null)
       {
@@ -121,7 +122,6 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       }
       SetNativeControl(frameLayout);
       Layout(0, 0, fab.MeasuredWidth + MARGIN * 2, fab.MeasuredHeight + MARGIN * 2);
-
     }
 
     /// <summary>

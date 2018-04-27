@@ -52,15 +52,22 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       var layout = new LinearLayout(Context);
       layout.RemoveAllViews();
       layout.Orientation = Orientation.Vertical;
+      //layout.SetBackgroundColor(Color.Fuchsia.ToAndroid());
 
-      var lpar = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
-      lpar.Gravity = Android.Views.GravityFlags.Bottom | Android.Views.GravityFlags.CenterHorizontal;
-      layout.LayoutParameters = lpar;
+      layout.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent)
+      {
+        Gravity = Android.Views.GravityFlags.Bottom | Android.Views.GravityFlags.End,
+        Weight = 1
+      };
 
       ChildrenLayout = new LinearLayout(Context)
       {
         Orientation = Orientation.Vertical,
-        LayoutParameters = lpar
+        LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent)
+        {
+          Weight = 1,
+          Gravity = Android.Views.GravityFlags.Bottom | Android.Views.GravityFlags.CenterHorizontal
+        }
       };
 
       AttachActionButtons();
@@ -70,19 +77,44 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       if (Element.ToggleButton != null)
       {
         var toggleButtonRenderer = Platform.CreateRendererWithContext(Element.ToggleButton, Context).View;
-        var layoutParams = new LinearLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height);
-        toggleButtonRenderer.LayoutParameters = layoutParams;
+        toggleButtonRenderer.LayoutParameters = new LinearLayout.LayoutParams(toggleButtonRenderer.Width, toggleButtonRenderer.Height)
+        {
+          Gravity = Android.Views.GravityFlags.Bottom,
+          Weight = 0
+        };
         layout.AddView(toggleButtonRenderer);
       }
 
-      layout.Measure(AT_MOST, AT_MOST);
-      Measure(AT_MOST, AT_MOST);
       SetNativeControl(layout);
+      SetLayout();
+    }
+
+    void SetLayout()
+    {
+      Control.Measure(AT_MOST, AT_MOST);
+      Control.Measure(AT_MOST,
+                      MeasureSpec.MakeMeasureSpec(Control.MeasuredHeight + 200, Android.Views.MeasureSpecMode.Exactly));
+      Control.Layout(0, 0, Control.MeasuredWidth, Control.MeasuredHeight);
+     
+      Measure(MeasureSpec.MakeMeasureSpec(Control.MeasuredWidth, Android.Views.MeasureSpecMode.Exactly),
+                      MeasureSpec.MakeMeasureSpec(Control.MeasuredHeight, Android.Views.MeasureSpecMode.Exactly));
+
+      Layout(0, 0, MeasuredWidth, MeasuredHeight);
+      Element.HeightRequest = MeasuredHeight / Context.Resources.DisplayMetrics.Density;
+      Element.WidthRequest = MeasuredWidth / Context.Resources.DisplayMetrics.Density;
     }
 
     void AttachActionButtons()
     {
       ChildrenLayout.RemoveAllViews();
+      ChildrenLayout.AddView(new LinearLayout(Context)
+      {
+        LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent)
+        {
+          Weight = 1
+        }
+      });
+
       if (Element.Contents?.Count() > 0)
       {
         for (var i = 0; i < Element.Contents.Count(); ++i)
@@ -94,16 +126,20 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
           {
             fab.Index = Element.Contents.Count() - i;
           }
-          var layoutParams = new LinearLayout.LayoutParams(buttonRenderer.Width, buttonRenderer.Height);
-          layoutParams.Gravity = Android.Views.GravityFlags.CenterHorizontal | Android.Views.GravityFlags.Bottom;
-          buttonRenderer.LayoutParameters = layoutParams;
+
+          buttonRenderer.LayoutParameters = new LinearLayout.LayoutParams(buttonRenderer.Width, buttonRenderer.Height)
+          {
+            Gravity = Android.Views.GravityFlags.Bottom | Android.Views.GravityFlags.CenterHorizontal,
+            Weight = 0
+          };
+          buttonRenderer.Measure(MeasureSpec.MakeMeasureSpec(buttonRenderer.Width, Android.Views.MeasureSpecMode.Exactly),
+                                 MeasureSpec.MakeMeasureSpec(buttonRenderer.Height, Android.Views.MeasureSpecMode.Exactly));
           ChildrenLayout.AddView(buttonRenderer);
         }
       }
       ChildrenLayout.Measure(AT_MOST, AT_MOST);
-      ChildrenLayout.Measure(AT_MOST, MeasureSpec.MakeMeasureSpec(ChildrenLayout.MeasuredHeight + 100, Android.Views.MeasureSpecMode.Exactly));
+      ChildrenLayout.Measure(AT_MOST, MeasureSpec.MakeMeasureSpec(ChildrenLayout.MeasuredHeight + (200), Android.Views.MeasureSpecMode.Exactly));
       ChildrenLayout.Layout(0, 0, ChildrenLayout.MeasuredWidth, ChildrenLayout.MeasuredHeight);
-
     }
 
     void HandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -117,10 +153,7 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         Device.BeginInvokeOnMainThread(() =>
         {
           AttachActionButtons();
-          Control.Measure(AT_MOST, AT_MOST);
-          Measure(MeasureSpec.MakeMeasureSpec(Control.MeasuredWidth, Android.Views.MeasureSpecMode.Exactly), MeasureSpec.MakeMeasureSpec(Control.MeasuredHeight + 100, Android.Views.MeasureSpecMode.Exactly));
-          Element.HeightRequest = MeasuredHeight / Context.Resources.DisplayMetrics.Density;
-          Element.WidthRequest = MeasuredWidth / Context.Resources.DisplayMetrics.Density;
+          SetLayout();
         });
       }
     }
