@@ -6,8 +6,8 @@
 using System.Reflection;
 
 [assembly: AssemblyProduct("FuryTechs.FloatingActionButton")]
-[assembly: AssemblyVersion("0.0.13")]
-[assembly: AssemblyFileVersion("0.0.13")]
-[assembly: AssemblyInformationalVersion("0.0.13")]
+[assembly: AssemblyVersion("0.0.14")]
+[assembly: AssemblyFileVersion("0.0.14")]
+[assembly: AssemblyInformationalVersion("0.0.14")]
 [assembly: AssemblyCopyright("Copyright (c) 2018 FuryTechs")]
 
