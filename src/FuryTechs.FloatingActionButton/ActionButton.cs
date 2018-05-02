@@ -206,11 +206,36 @@ namespace FuryTechs.FloatingActionButton
       }
     }
 
+    /// <summary>
+    /// The tooltip property.
+    /// </summary>
+    public static readonly BindableProperty TooltipProperty =
+                           BindableProperty.Create(nameof(Tooltip),
+                                                   typeof(string),
+                                                   typeof(ActionButton),
+                                                   string.Empty);
+
+    /// <summary>
+    /// Gets or sets the tooltip.
+    /// </summary>
+    /// <value>The tooltip.</value>
+    public string Tooltip
+    {
+      get
+      {
+        return (string)GetValue(TooltipProperty);
+      }
+
+      set
+      {
+        SetValue(TooltipProperty, value);
+      }
+    }
 
     /// <summary>
     /// Show Hide Delegate
     /// </summary>
-    public delegate void ShowHideDelegate(bool animate = true);
+    public delegate void ShowHideDelegate(double? moveTo = null);
 
     /// <summary>
     /// Show the control

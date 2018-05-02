@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -56,7 +57,7 @@ namespace FuryTechs.FloatingActionButton
         {
           foreach (var e in newCollection)
           {
-            e.Hide?.Invoke(false);
+            e.Hide?.Invoke();
           }
         }
       }
@@ -68,7 +69,7 @@ namespace FuryTechs.FloatingActionButton
       {
         foreach (var item in e.NewItems)
         {
-          (item as ActionButton).Hide?.Invoke(false);
+          (item as ActionButton).Hide?.Invoke();
         }
       }
       OnPropertyChanged(nameof(Contents));
@@ -143,15 +144,15 @@ namespace FuryTechs.FloatingActionButton
       }
     }
 
-		protected override void OnSizeAllocated(double width, double height)
-		{
+    protected override void OnSizeAllocated(double width, double height)
+    {
       base.OnSizeAllocated(width, height);
-		}
+    }
 
-		/// <summary>
-		/// Binds to toggle button click event
-		/// </summary>
-		void ToggleButtonChanged()
+    /// <summary>
+    /// Binds to toggle button click event
+    /// </summary>
+    void ToggleButtonChanged()
     {
       ToggleButton.Clicked += ToggleMenu;
     }
@@ -167,17 +168,24 @@ namespace FuryTechs.FloatingActionButton
       {
         foreach (var c in Contents)
         {
-          c.Show?.Invoke();
+          c.Show?.Invoke(0);
         }
         Open = true;
         ToggleButton.RotateTo(135, 500, Easing.SpringOut);
       }
       else
       {
-        foreach (var c in Contents)
+        double Y = 0;
+        for (int i = Contents.Count - 1; i >= 0; --i)
         {
-          c.Hide?.Invoke();
+          Y += Contents.ElementAt(i).Height;
+          Contents.ElementAt(i).Hide?.Invoke(Y);
         }
+
+        //foreach (var c in Contents)
+        //{
+        //  c.Hide?.Invoke();
+        //}
         Open = false;
         ToggleButton.RotateTo(0, 500, Easing.SpringOut);
       }

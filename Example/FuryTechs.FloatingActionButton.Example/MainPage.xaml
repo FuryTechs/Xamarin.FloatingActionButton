@@ -10,7 +10,7 @@
                     AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
         <Label Text="Sajt" />
       </StackLayout>
-      <fab:ActionMenu x:Name="Menu"
+      <fab:ActionMenu x:Name="Menu" Open="true"
                        AbsoluteLayout.LayoutFlags="PositionProportional"
                        AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
                        VerticalOptions="EndAndExpand"
@@ -22,15 +22,22 @@
         </fab:ActionMenu.ToggleButton>
         <fab:ActionMenu.Contents>
           <fab:ActionButton x:Name="Fab" ButtonColor="Blue" Size="Normal"
-                             Color="Red">
+                             Color="Red" Tooltip="Sajt 1">
             <fab:FontAwesomeIcon Icon="FAPlus" />
           </fab:ActionButton>
           <fab:ActionButton x:Name="MiniFab" ButtonColor="Green" Size="Mini"
-                             Color="White">
+                             Color="White" Tooltip="Sajt 2 egy hosszabb tuuultip">
             <fab:FontAwesomeIcon Icon="FAPlus" />
           </fab:ActionButton>
         </fab:ActionMenu.Contents>
       </fab:ActionMenu>
+     <!-- <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize">
+        <fab:ActionButton x:Name="CustomFab" ButtonColor="Blue" Size="Normal"
+                           Tooltip="Sajt" Color="Red">
+          <fab:FontAwesomeIcon Icon="FAPlus" />
+        </fab:ActionButton>
+      </StackLayout>-->
     </AbsoluteLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Android.Content;
 using Android.Content.Res;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using FuryTechs.FloatingActionButton;
 using FuryTechs.FloatingActionButton.Droid.Renderers;
@@ -52,11 +53,11 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     {
       float d = Context.Resources.DisplayMetrics.Density;
       MARGIN = (int)(MARGIN_DIPS * d); // margin in pixels
-      
+
       fab = new Android.Support.Design.Widget.FloatingActionButton(Context);
       fab.Measure(AT_MOST, AT_MOST);
-      var lp = new FrameLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
-      lp.Gravity = GravityFlags.CenterVertical | GravityFlags.CenterHorizontal;
+      var lp = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
+      lp.Gravity = GravityFlags.Bottom | GravityFlags.Right;
       lp.SetMargins(MARGIN, MARGIN, MARGIN, MARGIN);
       fab.LayoutParameters = lp;
     }
@@ -93,13 +94,28 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
 
       fab.BackgroundTintList = ColorStateList.ValueOf(Element.ButtonColor.ToAndroid());
       fab.RippleColor = Element.ColorRipple.ToAndroid();
-      //fab.RippleColor = Element.ColorRipple.ToAndroid();
       fab.Click += Fab_Click;
 
       var frameLayout = new FrameLayout(Context);
       frameLayout.RemoveAllViews();
-      frameLayout.AddView(fab);
-      //frameLayout.SetBackgroundColor(Element.ButtonColor.MultiplyAlpha(.5).ToAndroid());
+      var layout = new LinearLayout(Context);
+      layout.Orientation = Android.Widget.Orientation.Horizontal;
+      if (!string.IsNullOrWhiteSpace(Element.Tooltip))
+      {
+        var view = new TextView(Context);
+        view.Text = Element.Tooltip;
+        view.SetTextColor(Color.White.ToAndroid());
+        view.SetBackgroundColor(Color.Black.MultiplyAlpha(0.5).ToAndroid());
+        view.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent)
+        {
+          Gravity = GravityFlags.CenterVertical | GravityFlags.CenterHorizontal,
+        };
+        view.SetPadding(10, 5, 10, 5);
+        layout.AddView(view);
+      }
+      layout.AddView(fab);
+      layout.Measure(AT_MOST, AT_MOST);
+      frameLayout.AddView(layout);
 
       if (Element.Content != null)
       {
@@ -112,9 +128,12 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
           var drawable = new Android.Graphics.Drawables.BitmapDrawable(Resources, bmp);
           fab.SetImageDrawable(drawable);
         }
+
       }
       SetNativeControl(frameLayout);
-      Layout(0, 0, fab.MeasuredWidth + MARGIN * 2, fab.MeasuredHeight + MARGIN * 2);
+      //SetBackgroundColor(Color.Fuchsia.MultiplyAlpha(0.2).ToAndroid());
+      //Layout(0, 0, fab.MeasuredWidth + MARGIN * 2, fab.MeasuredHeight + MARGIN * 2);
+      Layout(0, 0, layout.MeasuredWidth, layout.MeasuredHeight);
     }
 
     /// <summary>
@@ -137,41 +156,48 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       set;
     } = Easing.CubicInOut;
 
+    public override float Rotation
+    {
+      get => fab.Rotation;
+      set => fab.Rotation = value;
+    }
+
     /// <summary>
     /// Show
     /// </summary>
-    public void Show(bool animate = true)
+    public void Show(double? moveTo = null)
     {
-      fab?.Show();
-      if (animate)
+      if (moveTo != null)
       {
-        Element.TranslateTo(0, 0, (uint)Math.Max(0, Element.AnimationDuration), ShowEasing);
-        Element.ScaleTo(1, (uint)Math.Max(0, Element.AnimationDuration), ShowEasing);
+        //fab?.Show();
+        Element.TranslateTo(0, 0, (uint)Math.Max(300, Element.AnimationDuration), ShowEasing);
+        Element.FadeTo(1, (uint)Math.Max(300, Element.AnimationDuration), Easing.CubicInOut);
       }
       else
       {
         Element.TranslationY = 0;
-        Element.Scale = 1;
+        Element.Opacity = 1;
+
       }
       Element.IsHidden = false;
     }
 
-
     /// <summary>
     /// Hide!
     /// </summary>
-    public void Hide(bool animate = true)
+    public void Hide(double? moveTo = null)
     {
-      fab.Hide();
-      if (animate)
+      if (moveTo != null)
       {
-        Element.TranslateTo(0, (Height / Context.Resources.DisplayMetrics.Density) * Index, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
-        Element.ScaleTo(0, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
+        //fab.Hide();
+        Element.TranslateTo(0, moveTo.Value, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
+        Element.FadeTo(0, (uint)Math.Max(0, Element.AnimationDuration), HideEasing);
       }
       else
       {
-        Element.TranslationY = (Height / Context.Resources.DisplayMetrics.Density) * Index;
-        Element.Scale = 0;
+        // Just to be sure it's hidden
+        Element.TranslationY = (Height * 1.6 / Context.Resources.DisplayMetrics.Density) * Index;
+        Element.Opacity = 0;
       }
       Element.IsHidden = true;
     }
@@ -191,6 +217,10 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
       {
         Element.Content.Color = Element.Color;
       }
+      else if (e.PropertyName == ActionButton.TooltipProperty.PropertyName)
+      {
+        fab.TooltipText = Element.Tooltip;
+      }
       else if (e.PropertyName == ActionButton.ColorRippleProperty.PropertyName)
       {
         fab.RippleColor = Element.ColorRipple.ToAndroid();
@@ -205,7 +235,6 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
     {
       if (size == Abstraction.Size.Mini)
       {
-        
         fab.Size = Android.Support.Design.Widget.FloatingActionButton.SizeMini;
         Element.WidthRequest = FAB_FRAME_HEIGHT_WITH_PADDING_MINI;
         Element.HeightRequest = FAB_FRAME_HEIGHT_WITH_PADDING_MINI;
@@ -216,9 +245,10 @@ namespace FuryTechs.FloatingActionButton.Droid.Renderers
         Element.WidthRequest = FAB_FRAME_HEIGHT_WITH_PADDING;
         Element.HeightRequest = FAB_FRAME_HEIGHT_WITH_PADDING;
       }
-      fab.Measure(AT_MOST, AT_MOST);
-
       Element.Margin = MARGIN;
+      fab.Measure(MeasureSpec.MakeMeasureSpec(FAB_FRAME_HEIGHT_WITH_PADDING, MeasureSpecMode.Exactly),
+                  MeasureSpec.MakeMeasureSpec(FAB_FRAME_HEIGHT_WITH_PADDING, MeasureSpecMode.Exactly)
+                 );
       Element.Layout(new Rectangle(0, 0, Element.WidthRequest, Element.HeightRequest));
     }
 
