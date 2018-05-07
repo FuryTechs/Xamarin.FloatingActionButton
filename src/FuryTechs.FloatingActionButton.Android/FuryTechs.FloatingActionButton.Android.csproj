@@ -51,7 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
+    <PackageReference Include="Xamarin.Forms">
+      <Version>3.0.0.446417</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Renderers\ActionButtonRenderer.cs" />
@@ -78,7 +80,7 @@
     <Folder Include="Renderers\ContentTypes\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\FontAwesome.ttf" />
+    <AndroidAsset Include="Assets\FontAwesome.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
